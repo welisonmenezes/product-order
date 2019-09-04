@@ -7,7 +7,7 @@ from modules.order.order import orderBP
 from modules.product.product import productBP
 
 def create_app():
-    app = Flask(__name__, template_folder='templates/', static_folder='stati/')
+    app = Flask(__name__)
 
     # config app
     app.config.from_pyfile('config.py')
@@ -19,8 +19,8 @@ def create_app():
     app.register_blueprint(orderBP)
     app.register_blueprint(productBP)
 
-    @app.errorhandler(404)
-    def nao_encontrado(error):
-        return redirect('/error', code=302)
+    # @app.errorhandler(404)
+    # def nao_encontrado(error):
+    #     return redirect('/error', code=302)
 
     return app

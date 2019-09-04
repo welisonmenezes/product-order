@@ -1,33 +1,62 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}Order Product Admin Example{% endblock %}</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconfonts/ionicons/css/ionicons.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='vendors/iconfonts/typicons/src/font/typicons.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='vendors/iconfonts/flag-icon-css/css/flag-icon.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/css/vendor.bundle.addons.css') }}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/shared/style.css') }}">
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/demo_1/style.css') }}">
+  <!-- End Layout styles -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
 </head>
+
 <body>
-    <ul>
-        <li>
-            <a href="{{ url_for('home.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('client.index') }}">Clientes</a>
-        </li>
-        <li>
-            <a href="{{ url_for('product.index') }}">Produtos</a>
-        </li>
-        <li>
-            <a href="{{ url_for('order.index') }}">Pedidos</a>
-        </li>
-        <li>
-            <a href="">Sair</a>
-        </li>
-    </ul>
-    <main>
-        {% block content %}
-            conteúdo aqui
-        {% endblock content %}
-    </main>
+
+  <div class="container-scroller">
+
+    {% include "shared/adm-header.html" ignore missing %}
+
+    <div class="container-fluid page-body-wrapper">
+
+      {% include "shared/adm-sidebar.html" ignore missing %}
+
+      {% block content %} Content here {% endblock content %}
+
+    </div>
+
+  </div>
+
+  <!-- plugins:js -->
+  <script src="{{ url_for('static', filename='vendors/js/vendor.bundle.base.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/js/vendor.bundle.addons.js') }}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="{{ url_for('static', filename='js/shared/off-canvas.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/shared/misc.js') }}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{ url_for('static', filename='js/demo_1/dashboard.js') }}"></script>
+  <!-- End custom js for this page-->
 </body>
+
 </html>
