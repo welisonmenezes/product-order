@@ -1,5 +1,106 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Product page</h1>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row mb-20">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-primary btn-fw btn-lg">
+                    <i class="mdi mdi-star-outline"></i>Adicionar Novo
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Produtos</h2>
+                        <hr />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Imagem</th>
+                                    <th>Código</th>
+                                    <th>Name</th>
+                                    <th>Created</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{{ url_for('static', filename='images/faces-clipart/pic-1.png') }}"
+                                            alt="image">
+                                    </td>
+                                    <td>53275531</td>
+                                    <td>Lorem Ipsum</td>
+                                    <td>12 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-success">Success</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{{ url_for('static', filename='images/faces-clipart/pic-1.png') }}"
+                                            alt="image">
+                                    </td>
+                                    <td>53275531</td>
+                                    <td>Lorem Ipsum</td>
+                                    <td>12 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-danger">Danger</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{{ url_for('static', filename='images/faces-clipart/pic-1.png') }}"
+                                            alt="image">
+                                    </td>
+                                    <td>53275531</td>
+                                    <td>Lorem Ipsum</td>
+                                    <td>12 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-info">Info</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{{ url_for('static', filename='images/faces-clipart/pic-1.png') }}"
+                                            alt="image">
+                                    </td>
+                                    <td>53275531</td>
+                                    <td>Lorem Ipsum</td>
+                                    <td>12 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-warning">Warning</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-primary">1</button>
+                        <button type="button" class="btn btn-primary">2</button>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Second group">
+                        <button type="button" class="btn btn-primary">5</button>
+                        <button type="button" class="btn btn-primary">6</button>
+                        <button type="button" class="btn btn-primary">7</button>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-primary">8</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}

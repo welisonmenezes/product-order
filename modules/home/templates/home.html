@@ -1,5 +1,131 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Home page</h1>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+
+        <div class="row page-title-header">
+            <div class="col-md-12">
+                <h1>Painel de controle</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-0">Estatísticas de pedidos</h4>
+                        <div class="d-flex flex-column flex-lg-row">
+                            <ul class="nav nav-tabs sales-mini-tabs ml-lg-auto mb-4 mb-md-0" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="sales-statistics_switch_1" data-toggle="tab"
+                                        role="tab" aria-selected="true">1D</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sales-statistics_switch_2" data-toggle="tab" role="tab"
+                                        aria-selected="false">5D</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sales-statistics_switch_3" data-toggle="tab" role="tab"
+                                        aria-selected="false">1M</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sales-statistics_switch_4" data-toggle="tab" role="tab"
+                                        aria-selected="false">1Y</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-flex flex-column flex-lg-row">
+                            <div class="data-wrapper d-flex mt-2 mt-lg-0">
+                                <div class="wrapper pr-5">
+                                    <h5 class="mb-0">Total Cost</h5>
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="font-weight-semibold mb-0">15,263</h4>
+                                        <small class="ml-2 text-gray d-none d-lg-block"><b>89.5%</b> of 20,000
+                                            Total</small>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <h5 class="mb-0">Total Revenue</h5>
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="font-weight-semibold mb-0">$753,098</h4>
+                                        <small class="ml-2 text-gray d-none d-lg-block"><b>10.5%</b> of 20,000
+                                            Total</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-lg-auto" id="sales-statistics-legend"></div>
+                        </div>
+                        <canvas class="mt-5" height="120" id="sales-statistics-overview"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-0">Últimos pedidos</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Profile</th>
+                                    <th>VatNo.</th>
+                                    <th>Created</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jacob</td>
+                                    <td>53275531</td>
+                                    <td>12 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-danger">Pending</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Messsy</td>
+                                    <td>53275532</td>
+                                    <td>15 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-warning">In progress</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>John</td>
+                                    <td>53275533</td>
+                                    <td>14 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-info">Fixed</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Peter</td>
+                                    <td>53275534</td>
+                                    <td>16 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-success">Completed</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dave</td>
+                                    <td>53275535</td>
+                                    <td>20 May 2017</td>
+                                    <td>
+                                        <label class="badge badge-warning">In progress</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 {% endblock content %}

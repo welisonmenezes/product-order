@@ -1,0 +1,11 @@
+.mb-20{
+    margin-bottom: 20px;
+}
+
+table .fa{
+    display: inline-block;
+    font-size: 25px;
+    cursor: pointer;
+    vertical-align: middle;
+    color: #ff6258;
+}

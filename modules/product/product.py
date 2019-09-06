@@ -6,3 +6,7 @@ productBP = Blueprint('product', __name__, url_prefix='/product', template_folde
 @productBP.route('/')
 def index():
     return render_template('product.html'), 200
+
+@productBP.route('/add')
+def add():
+    return render_template('product_add.html'), 200

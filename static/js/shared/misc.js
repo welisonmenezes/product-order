@@ -19,7 +19,10 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
     //Add active class to nav-link based on url dynamically
     //Active class can be hard coded directly in html file also as required
     if (!$('#sidebar').hasClass("dynamic-active-class-disabled")) {
-      var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+      //var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+      //console.log(location.pathname.split("/"))
+      var ls = location.pathname.split("/");
+      var current = ls[1] + '/' + ls[2];
       $('#sidebar >.nav > li:not(.not-navigation-link) a').each(function () {
         var $this = $(this);
         if (current === "") {
