@@ -14,3 +14,7 @@ table .fa{
     background: url(../images/login_1.jpg);
     background-size: cover;
 }
+
+.invalid-feedback{
+    display: block;
+}
