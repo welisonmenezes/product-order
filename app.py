@@ -19,8 +19,12 @@ def create_app():
     app.register_blueprint(orderBP)
     app.register_blueprint(productBP)
 
-    # @app.errorhandler(404)
-    # def nao_encontrado(error):
-    #     return redirect('/error', code=302)
+    @app.errorhandler(404)
+    def notFound(error):
+        return redirect('/error/404', code=302)
+
+    @app.errorhandler(500)
+    def serverError(error):
+        return redirect('/error/500', code=302)
 
     return app
