@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}Order Product Admin Example{% endblock %}</title>
+    <title>Star Admin Premium Bootstrap Admin Dashboard Template</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconfonts/font-awesome/css/font-awesome.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/icheck/all.css') }}">
@@ -12,21 +13,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
 </head>
+
 <body>
-
-    <div class="container-scroller">
-
-        {% include "shared/adm-header.html" ignore missing %}
-
-        <div class="container-fluid page-body-wrapper">
-
-            {% include "shared/adm-sidebar.html" ignore missing %}
-
-            {% block content %} Content here {% endblock content %}
-
-        </div>
-
-    </div>
+    {% block content %} Content here {% endblock content %}
 
     <script src="{{ url_for('static', filename='vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ url_for('static', filename='vendors/js/vendor.bundle.addons.js') }}"></script>

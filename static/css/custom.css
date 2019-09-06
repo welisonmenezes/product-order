@@ -9,3 +9,8 @@ table .fa{
     vertical-align: middle;
     color: #ff6258;
 }
+
+.auth.auth-bg-1 {
+    background: url(../images/login_1.jpg);
+    background-size: cover;
+}

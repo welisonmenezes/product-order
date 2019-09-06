@@ -5,6 +5,7 @@ from modules.error.error import errorBP
 from modules.client.client import clientBP
 from modules.order.order import orderBP
 from modules.product.product import productBP
+from modules.auth.auth import authBP
 
 def create_app():
     app = Flask(__name__)
@@ -18,6 +19,7 @@ def create_app():
     app.register_blueprint(clientBP)
     app.register_blueprint(orderBP)
     app.register_blueprint(productBP)
+    app.register_blueprint(authBP)
 
     @app.errorhandler(404)
     def notFound(error):
