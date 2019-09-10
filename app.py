@@ -6,6 +6,7 @@ from modules.client.client import clientBP
 from modules.order.order import orderBP
 from modules.product.product import productBP
 from modules.auth.auth import authBP
+from modules.login.login import loginBP
 
 def create_app():
     app = Flask(__name__)
@@ -20,13 +21,14 @@ def create_app():
     app.register_blueprint(orderBP)
     app.register_blueprint(productBP)
     app.register_blueprint(authBP)
+    app.register_blueprint(loginBP)
 
     @app.errorhandler(404)
     def notFound(error):
-        return redirect('/error/404', code=302)
+        return redirect('/error/404')
 
     @app.errorhandler(500)
     def serverError(error):
-        return redirect('/error/500', code=302)
+        return redirect('/error/500')
 
     return app
