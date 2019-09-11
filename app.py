@@ -11,24 +11,18 @@ from modules.login.login import loginBP
 def create_app():
     app = Flask(__name__)
 
+    #print(session['key'])
+
     # config app
     app.config.from_pyfile('config.py')
     
     # blueprint test
-    app.register_blueprint(homeBP)
     app.register_blueprint(errorBP)
+    app.register_blueprint(homeBP)
     app.register_blueprint(clientBP)
     app.register_blueprint(orderBP)
     app.register_blueprint(productBP)
     app.register_blueprint(authBP)
     app.register_blueprint(loginBP)
-
-    @app.errorhandler(404)
-    def notFound(error):
-        return redirect('/error/404')
-
-    @app.errorhandler(500)
-    def serverError(error):
-        return redirect('/error/500')
 
     return app

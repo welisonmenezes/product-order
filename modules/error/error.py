@@ -1,12 +1,12 @@
 import os
 from flask import current_app, Blueprint, render_template, request, url_for
 
-errorBP = Blueprint('error', __name__, url_prefix='/error', template_folder='templates/', static_folder='static/')
+errorBP = Blueprint('error', __name__, url_prefix='/', template_folder='templates/', static_folder='static/')
 
-@errorBP.route('/404')
-def index():
-    return render_template('error404.html'), 200
+@errorBP.errorhandler(404)
+def notFound(error):
+    return render_template('error404.html'), 404
 
-@errorBP.route('/500')
-def serverError():
-    return render_template('error500.html'), 200
+@errorBP.errorhandler(500)
+def serverError(error):
+    return render_template('error500.html'), 500
