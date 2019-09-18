@@ -22,10 +22,10 @@
                         <form action="" method="POST" novalidate>
                             {{ form.csrf_token }}
                             <div class="form-group">
-                                {{ render_field(form.login) }}
+                                {{ render_field(form.login, 'abc') }}
                             </div>
                             <div class="form-group">
-                                {{ render_field(form.password) }}
+                                {{ render_field(form.password, 'bolinhas') }}
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary submit-btn btn-block">Login</button>

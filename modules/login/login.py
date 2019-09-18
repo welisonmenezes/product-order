@@ -8,6 +8,8 @@ def index():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         if (request.form.get('login') == 'abc' and request.form.get('password') == 'bolinhas'):
+            session.clear()
+            session.permanent = True
             session['user'] = request.form.get('login')
             return redirect( url_for('home.index') )
         else:
@@ -17,4 +19,5 @@ def index():
 @loginBP.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('user')
+    session.clear()
     return redirect( url_for('login.index') )

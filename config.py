@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 # Configurações de ambiente
 ENV = 'development'
 DEBUG = True
@@ -11,6 +13,8 @@ MYSQL_DB = 'testes'
 
 # Configurações de segurança
 SECRET_KEY = '#$#gdFDKF#993FDVKkfdkj#$$2@@@@dfdlafFGÇPLO^dfe__fd'
+PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
+USE_PERMANENT_SESSION = True
 
 # Configurações de upload
 UPLOAD_FOLDER = 'uploads'

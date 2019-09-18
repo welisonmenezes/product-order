@@ -1,11 +1,11 @@
-{% macro render_field(field) %}
+{% macro render_field(field, value) %}
     {{ field.label }}
     {% if field.errors %}
-        {{ field(class="form-control is-invalid") }}
+        {{ field(class="form-control is-invalid", value=value) }}
     {% for error in field.errors %}
         <span class="invalid-feedback">{{ error }}</span>
     {% endfor %}
     {% else %}
-        {{ field(class="form-control") }}
+        {{ field(class="form-control", value=value) }}
     {% endif %}
 {% endmacro %}
