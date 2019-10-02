@@ -14,6 +14,13 @@ def index():
 @login_required
 def add():
     form = ClientForm(request.form)
+
+    if form.estado.data != 'None':
+        form.estado.choices = [(form.estado.data, form.estado.data)]
+
+    if form.cidade.data != 'None':
+        form.cidade.choices = [(form.cidade.data, form.cidade.data)]
+
     if form.validate_on_submit():
         print('valido')
     return render_template('client_add.html', form=form), 200
