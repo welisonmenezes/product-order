@@ -27962,7 +27962,7 @@ $(window).on('load', function() {
     
     estados.map(function(estado) {
         selecEstado.append($('<option>', { 
-            value: estado.Nome,
+            value: estado.Sigla,
             text : estado.Nome
         }));
     });
@@ -27976,7 +27976,7 @@ $(window).on('load', function() {
         }));
         if (estadoNome) {
             var estadoSelecionado = estados.filter(function(estado) {
-                return estado.Nome ===  estadoNome;
+                return estado.Sigla ===  estadoNome;
             });
             if (estadoSelecionado && estadoSelecionado[0] && estadoSelecionado[0].ID) {
                 var cidadesByEstado = cidades.filter(function(cidade) {

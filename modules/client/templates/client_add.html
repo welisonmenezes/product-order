@@ -20,14 +20,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            {{ render_field(form.codigo) }}
+                                            {{ render_field(form.nome, '', '255') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                                {{ render_field(form.nome) }}
+                                            {{ render_field(form.telefone, '', '15') }}
                                         </div>
                                     </div>
                                 </div>
@@ -37,16 +37,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Telefone</label>
-                                            <input type="text" class="form-control" placeholder="Telefone" />
+                                            {{ render_field(form.endereco, '', '255') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="Email" />
+                                            {{ render_field(form.numero, '', '11') }}
                                         </div>
                                     </div>
                                 </div>
@@ -56,20 +54,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Estado</label>
-                                            <select class="form-control select-estado">
-                                                <option value="">Estado</option>
-                                            </select>
+                                            {{ render_field(form.cep, '', '9') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Cidade</label>
-                                            <select class="form-control select-cidade">
-                                                <option value="">Cidade</option>
-                                            </select>
+                                            {{ render_field(form.bairro, '', '100') }}
                                         </div>
                                     </div>
                                 </div>
@@ -79,16 +71,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Bairro</label>
-                                            <input type="text" class="form-control" placeholder="Bairro" />
+                                            {{ render_field(form.estado, 'select-estado') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Rua</label>
-                                            <input type="text" class="form-control" placeholder="Rua" />
+                                            {{ render_field(form.cidade, 'select-cidade') }}
                                         </div>
                                     </div>
                                 </div>
@@ -98,27 +88,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>CEP</label>
-                                            <input type="text" class="form-control" placeholder="CEP" />
+                                            {{ render_field(form.observacao, '', '255') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Número</label>
-                                            <input type="text" class="form-control" placeholder="Número" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Observação</label>
-                                            <textarea class="form-control" placeholder="Observação"></textarea>
+                                            {{ render_field(form.email, '', '255') }}
                                         </div>
                                     </div>
                                 </div>

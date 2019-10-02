@@ -1,11 +1,11 @@
-{% macro render_field(field, value) %}
+{% macro render_field(field, cssClass='', maxLength='') %}
     {{ field.label }}
     {% if field.errors %}
-        {{ field(class="form-control is-invalid", value=value) }}
+        {{ field(class="form-control is-invalid "+cssClass, maxLength=""+maxLength) }}
     {% for error in field.errors %}
         <span class="invalid-feedback">{{ error }}</span>
     {% endfor %}
     {% else %}
-        {{ field(class="form-control", value=value) }}
+        {{ field(class="form-control "+cssClass, maxLength=""+maxLength) }}
     {% endif %}
 {% endmacro %}
