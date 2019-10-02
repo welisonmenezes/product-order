@@ -4,11 +4,9 @@
 
 {% block content %}
 
-
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
-
             <div class="col-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
@@ -20,110 +18,34 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            {{ render_field(form.codigo) }}
+                                            {{ render_field(form.nome, '', '255') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                                {{ render_field(form.nome) }}
+                                                {{ render_field(form.login, '', '45') }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Telefone</label>
-                                            <input type="text" class="form-control" placeholder="Telefone" />
+                                            {{ render_field(form.senha, '', '255') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="Email" />
+                                            {{ render_field(form.grupo) }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Estado</label>
-                                            <select class="form-control select-estado">
-                                                <option value="">Estado</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Cidade</label>
-                                            <select class="form-control select-cidade">
-                                                <option value="">Cidade</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Bairro</label>
-                                            <input type="text" class="form-control" placeholder="Bairro" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Rua</label>
-                                            <input type="text" class="form-control" placeholder="Rua" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>CEP</label>
-                                            <input type="text" class="form-control" placeholder="CEP" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Número</label>
-                                            <input type="text" class="form-control" placeholder="Número" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label>Observação</label>
-                                            <textarea class="form-control" placeholder="Observação"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success mr-2">Adicionar</button>
@@ -135,7 +57,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

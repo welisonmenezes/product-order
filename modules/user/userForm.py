@@ -1,28 +1,49 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, BooleanField, StringField, PasswordField, IntegerField, ValidationError
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms import StringField, PasswordField, SelectField
+from wtforms.validators import DataRequired, Length
 
 class UserForm(FlaskForm):
-    codigo = StringField(
-        'Código',
+    nome = StringField(
+        'Nome',
         validators = [
-            DataRequired(message="Campo obrigatório")
+            DataRequired(message="Campo obrigatório"),
+            Length(min=1, max=255, message='É permitido no máximo 255 caracteres')
         ],
         render_kw = {
-            'placeholder':'Código'
+            'placeholder':'Nome'
         }
     )
 
-    nome = StringField(
-        'Nome do cliente',
-        validators = [DataRequired(message="Campo obrigatório")],
+    login = StringField(
+        'Login',
+        validators = [
+            DataRequired(message="Campo obrigatório"),
+            Length(min=1, max=45, message='É permitido no máximo 45 caracteres')
+        ],
         render_kw = {
-            'placeholder':'Nome do cliente'
+            'placeholder':'Login'
         }
     )
 
-    def validate_codigo(form, field):
-        try:
-            float(field.data)
-        except:
-            raise ValidationError('Apenas número')
+    senha = PasswordField(
+        'Senha',
+        validators = [
+            DataRequired(message="Campo obrigatório"),
+            Length(min=1, max=255, message='É permitido no máximo 255 caracteres')
+        ],
+        render_kw = {
+            'placeholder':'Senha'
+        }
+    )
+
+    grupo = SelectField(
+        'Grupo',
+        validators = [
+            DataRequired(message="Campo obrigatório"),
+            Length(min=1, max=10, message='É permitido no máximo 10 caracteres')
+        ],
+        choices = [('', 'Selecione'), ('admin', 'Administrador'), ('almoxerife', 'Almoxerife'), ('user', 'Usuário')],
+        render_kw = {
+            'placeholder':'Grupo'
+        }
+    )
