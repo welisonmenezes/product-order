@@ -18,3 +18,16 @@ table .fa{
 .invalid-feedback{
     display: block;
 }
+
+.produtos-pedidos{
+    padding: 15px;
+    background: #f9f9f9;
+    margin-bottom: 30px;
+}
+
+.produtos-pedidos .row-pp{
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #f0f0f0;
+}
