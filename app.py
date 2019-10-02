@@ -7,6 +7,7 @@ from modules.order.order import orderBP
 from modules.product.product import productBP
 from modules.auth.auth import authBP
 from modules.login.login import loginBP
+from modules.user.user import userBP
 
 def create_app():
     app = Flask(__name__)
@@ -24,5 +25,6 @@ def create_app():
     app.register_blueprint(productBP)
     app.register_blueprint(authBP)
     app.register_blueprint(loginBP)
+    app.register_blueprint(userBP)
 
     return app
