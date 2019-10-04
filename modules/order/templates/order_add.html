@@ -41,7 +41,7 @@
                                 {% for pedido_produto in form.pedidos_produtos %}
                                     {{ pedido_produto.hidden_tag() }}
                                     <div class="row-pp">
-                                        <span class="remove-produto btn btn-danger">Remover</span>
+                                        <span class="remove-produto btn btn-danger hide">Remover</span>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h6>Produto {{ loop.index }}</h6>
