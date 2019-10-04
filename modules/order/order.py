@@ -14,6 +14,8 @@ def index():
 @login_required
 def add():
     form = OrderForm(request.form)
+    # if request.form:
+    #     print(request.form)
     if form.validate_on_submit():
         print('valido')
     return render_template('order_add.html', form=form), 200

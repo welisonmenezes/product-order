@@ -3,7 +3,7 @@ from wtforms import StringField, IntegerField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, Length
 
 class PedidoProdutoForm(FlaskForm):
-    quantidade = IntegerField(
+    quantidade = StringField(
         'Quantidade',
         validators = [
             DataRequired(message="Campo obrigatório"),
@@ -69,5 +69,5 @@ class OrderForm(FlaskForm):
 
     pedidos_produtos = FieldList(
         FormField(PedidoProdutoForm),
-        min_entries=3
+        min_entries=1
     )
