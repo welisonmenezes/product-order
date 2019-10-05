@@ -40,6 +40,25 @@ class User():
         except:
             return 'Ocorreu um erro na busca do usuário'
 
+    
+    def getByLogin(self, login):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT id, nome, login, senha, grupo FROM usuarios WHERE login = %s' , (login))
+            for linha in c:
+                self.id=linha[0]
+                self.nome=linha[1]
+                self.login=linha[2]
+                self.senha=linha[3]
+                self.grupo=linha[4]
+            c.close()
+            if not self.id:
+                return 'Usuário não encontrado!'
+            return 'Busca feita com sucesso!'
+        except:
+            return 'Ocorreu um erro na busca do usuário'
+
 
     def insert(self):
         banco = DB()

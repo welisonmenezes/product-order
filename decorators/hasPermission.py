@@ -4,7 +4,7 @@ from functools import wraps
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        user = session.get('user', None)
+        user = session.get('user_login', None)
         if not user:
             flash('Faça login para acessar')
             return redirect(url_for('login.index'))
