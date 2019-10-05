@@ -27,7 +27,7 @@
                                         <th>Nome</th>
                                         <th>Login</th>
                                         <th>Grupo</th>
-                                        <th>Editar</th>
+                                        <th>Editar/Excluir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,6 +40,9 @@
                                         <td>
                                             <a href="{{ url_for('user.edit', id=user[0]) }}" class="btn-edit">
                                                 <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="{{ url_for('user.delete', id=user[0]) }}" class="btn-delete">
+                                                <i class="fa fa-trash-o"></i>
                                             </a>
                                         </td>
                                     </tr>

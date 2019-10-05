@@ -13,6 +13,7 @@ def index():
     users = user.getAll()
     return render_template('user.html', users=users), 200
 
+
 @userBP.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
@@ -28,6 +29,7 @@ def add():
         flash(ret, 'info')
         return redirect(url_for('user.add'))
     return render_template('user_form.html', form=form), 200
+
 
 @userBP.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -45,7 +47,7 @@ def edit(id):
         user.login = form.login.data
         user.grupo = form.grupo.data
         if form.senha.data != '':
-            user.senha = form.senha.data
+            user.senha = form.senha.data 
     else:
         form = UserForm()
         form.nome.data = user.nome
@@ -58,3 +60,18 @@ def edit(id):
         flash(ret, 'info')
         return redirect(url_for('user.edit', id=user.id))
     return render_template('user_form.html', form=form), 200
+
+
+@userBP.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    user = User()
+    ret = user.get(id)
+    if not user.id:
+        flash(ret, 'info')
+        return redirect(url_for('user.index'))
+    if request.method == 'POST':
+        ret = user.delete()
+        flash(ret, 'info')
+        return redirect(url_for('user.index'))
+    return render_template('user_delete.html', userId=id), 200

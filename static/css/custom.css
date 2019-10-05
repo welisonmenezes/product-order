@@ -47,3 +47,13 @@ table .fa{
 .btn-edit i{
     color: rgb(86, 226, 180) !important;
 }
+.btn-delete i{
+    color: #ff6258 !important;
+}
+
+.btn-edit i,
+.btn-delete i{
+    font-size: 20px !important;
+    vertical-align: middle;
+    margin-right: 5px;
+}
