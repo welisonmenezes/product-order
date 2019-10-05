@@ -28,3 +28,33 @@ def add():
         flash(ret, 'info')
         return redirect(url_for('user.add'))
     return render_template('user_form.html', form=form), 200
+
+@userBP.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+
+    user = User()
+    ret = user.get(id)
+    if not user.id:
+        flash(ret, 'info')
+        return redirect(url_for('user.index'))
+
+    if request.form:
+        form = UserForm()
+        user.nome = form.nome.data
+        user.login = form.login.data
+        user.grupo = form.grupo.data
+        if form.senha.data != '':
+            user.senha = form.senha.data
+    else:
+        form = UserForm()
+        form.nome.data = user.nome
+        form.login.data = user.login
+        form.grupo.data = user.grupo
+    
+    form.senha.validators = []
+    if form.validate_on_submit():
+        ret = user.update()
+        flash(ret, 'info')
+        return redirect(url_for('user.edit', id=user.id))
+    return render_template('user_form.html', form=form), 200

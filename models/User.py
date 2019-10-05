@@ -34,6 +34,8 @@ class User():
                 self.senha=linha[3]
                 self.grupo=linha[4]
             c.close()
+            if not self.id:
+                return 'Usuário não encontrado!'
             return 'Busca feita com sucesso!'
         except:
             return 'Ocorreu um erro na busca do usuário'
