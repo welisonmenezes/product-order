@@ -17,6 +17,7 @@ def index():
 @userBP.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
+    title = 'Cadastrar usuário'
     form = UserForm(request.form)
     if form.validate_on_submit():
         user = User(
@@ -28,13 +29,13 @@ def add():
         ret = user.insert()
         flash(ret, 'info')
         return redirect(url_for('user.add'))
-    return render_template('user_form.html', form=form), 200
+    return render_template('user_form.html', form=form, title=title), 200
 
 
 @userBP.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-
+    title = 'Editar Usuário'
     user = User()
     ret = user.get(id)
     if not user.id:
@@ -59,7 +60,7 @@ def edit(id):
         ret = user.update()
         flash(ret, 'info')
         return redirect(url_for('user.edit', id=user.id))
-    return render_template('user_form.html', form=form), 200
+    return render_template('user_form.html', form=form, title=title, userId=id), 200
 
 
 @userBP.route('/delete/<int:id>', methods=['GET', 'POST'])
@@ -74,4 +75,5 @@ def delete(id):
         ret = user.delete()
         flash(ret, 'info')
         return redirect(url_for('user.index'))
-    return render_template('user_delete.html', userId=id), 200
+    title = 'Deseja realmente deletar o usuário ' + user.nome + '?'
+    return render_template('user_delete.html', userId=id, title=title), 200
