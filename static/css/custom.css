@@ -43,3 +43,7 @@ table .fa{
 .remove-produto.hide{
     display: none;
 }
+
+.btn-edit i{
+    color: rgb(86, 226, 180) !important;
+}
