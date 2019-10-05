@@ -3,6 +3,7 @@ from flask import current_app, Blueprint, render_template, request, url_for, fla
 from .userForm import UserForm
 from decorators.hasPermission import login_required
 from models.User import User
+from app import bcrypt
 
 userBP = Blueprint('user', __name__, url_prefix='/user', template_folder='templates', static_folder='static')
 
@@ -23,7 +24,7 @@ def add():
         user = User(
             form.nome.data,
             form.login.data,
-            form.senha.data,
+            bcrypt.generate_password_hash(form.senha.data),
             form.grupo.data
         )
         ret = user.insert()
@@ -48,7 +49,7 @@ def edit(id):
         user.login = form.login.data
         user.grupo = form.grupo.data
         if form.senha.data != '':
-            user.senha = form.senha.data 
+            user.senha = bcrypt.generate_password_hash(form.senha.data)
     else:
         form = UserForm()
         form.nome.data = user.nome
