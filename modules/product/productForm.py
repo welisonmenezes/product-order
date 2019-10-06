@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FileField
+from flask_wtf.file import FileRequired, FileAllowed
+from wtforms import StringField, SubmitField, FileField, FloatField
 from wtforms.validators import DataRequired, Length
+from werkzeug.utils import secure_filename
 
 class ProductForm(FlaskForm):
     descricao = StringField(
@@ -14,11 +16,10 @@ class ProductForm(FlaskForm):
         }
     )
 
-    valor = StringField(
+    valor = FloatField(
         'Valor',
         validators = [
-            DataRequired(message="Campo obrigatório"),
-            Length(min=1, max=11, message='É permitido no máximo 11 caracteres')
+            DataRequired(message="Campo obrigatório. (Apenas valor numérico)")
         ],
         render_kw = {
             'placeholder':'Valor'
@@ -28,9 +29,9 @@ class ProductForm(FlaskForm):
     imagem = FileField(
         'Imagem',
         validators = [
-            DataRequired(message="Campo obrigatório")
-        ],
-        render_kw = {
-            'placeholder':'Senha'
-        }
+            FileRequired(message="Imagem obrigatória"),
+            FileAllowed(['jpg', 'png', 'jpeg', 'gif'], "Apenas imagens é permitido")
+        ]
     )
+
+    submit = SubmitField('Adicionar')

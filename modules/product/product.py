@@ -1,6 +1,7 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect
 from .productForm import ProductForm
+from models.Product import Product
 from decorators.hasPermission import login_required
 
 productBP = Blueprint('product', __name__, url_prefix='/product', template_folder='templates/', static_folder='static/')
@@ -13,7 +14,17 @@ def index():
 @productBP.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
-    form = ProductForm(request.form)
+    form = ProductForm()
+    title = 'Cadastrar produto'
     if form.validate_on_submit():
-        print('valido')
-    return render_template('product_add.html', form=form), 200
+        image = request.files.get('imagem')
+        if image:
+            product = Product(
+                form.descricao.data,
+                form.valor.data,
+                image.read()
+            )
+            ret = product.insert()
+            flash(ret, 'info')
+            return redirect(url_for('product.add'))
+    return render_template('product_form.html', form=form, title=title), 200
