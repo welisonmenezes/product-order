@@ -13,7 +13,7 @@ MYSQL_DB = 'testes'
 
 # Configurações de segurança
 SECRET_KEY = '#$#gdFDKF#993FDVKkfdkj#$$2@@@@dfdlafFGÇPLO^dfe__fd'
-PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
+PERMANENT_SESSION_LIFETIME = timedelta(minutes=20)
 USE_PERMANENT_SESSION = True
 
 # Configurações de upload
