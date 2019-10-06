@@ -63,3 +63,11 @@ table .fa{
     max-width: 200px;
     max-height: 200px;
 }
+
+.img-ss, .table td img:not(.thumb-image), .table th img:not(.thumb-image){
+    height: auto;
+    width: auto;
+    max-width: 75px;
+    max-height: 50px;
+    border-radius: unset;
+}
