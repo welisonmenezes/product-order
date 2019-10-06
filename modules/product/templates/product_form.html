@@ -71,3 +71,11 @@
 </div>
 
 {% endblock content %}
+
+{% block footer_script %}
+    <script>
+        $('#imagem_edicao').on('change', function() {
+            $('.fig-image').remove();
+        });
+    </script>
+{% endblock footer_script %}

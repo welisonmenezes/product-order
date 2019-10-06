@@ -80,5 +80,5 @@ def delete(id):
         ret = product.delete()
         flash(ret, 'info')
         return redirect(url_for('product.index'))
-    title = 'Deseja realmente deletar o produt ' + str(product.id) + '?'
+    title = 'Deseja realmente deletar o produto ' + str(product.id) + '?'
     return render_template('product_delete.html', productId=id, title=title), 200
