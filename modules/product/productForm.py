@@ -34,4 +34,11 @@ class ProductForm(FlaskForm):
         ]
     )
 
-    submit = SubmitField('Adicionar')
+    imagem_edicao = FileField(
+        'Trocar Imagem',
+        validators = [
+            FileAllowed(['jpg', 'png', 'jpeg', 'gif'], "Apenas imagens é permitido")
+        ]
+    )
+
+    submit = SubmitField('Salvar')

@@ -6,9 +6,9 @@
     <div class="content-wrapper">
         <div class="row mb-20">
             <div class="col-md-12 text-right">
-                <button type="button" class="btn btn-primary btn-fw btn-lg">
+                <a href="{{ url_for('product.add') }}" class="btn btn-primary btn-fw btn-lg">
                     <i class="mdi mdi-star-outline"></i>Adicionar Novo
-                </button>
+                </a>
             </div>
         </div>
         <div class="row">
@@ -34,8 +34,7 @@
                                     {% for product in products %}
                                         <tr>
                                             <td class="py-1">
-                                                <img src="data:image/png;base64,{{ images[(loop.index-1)] }}"
-                                                    alt="image">
+                                                <img src="data:image/png;base64,{{ images[(loop.index-1)] }}" alt="image">
                                             </td>
                                             <td>{{ product[0] }}</td>
                                             <td>{{ product[1] }}</td>

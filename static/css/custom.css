@@ -57,3 +57,9 @@ table .fa{
     vertical-align: middle;
     margin-right: 5px;
 }
+
+.fig-image img{
+    display: block;
+    max-width: 200px;
+    max-height: 200px;
+}
