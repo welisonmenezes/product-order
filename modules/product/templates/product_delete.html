@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% from "macros/textFieldMacro.html" import render_field %}
+
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>{{ title }}</h2>
+                        <hr />
+                        <form action="{{ url_for('product.delete', id=productId) }}" method="post">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                            <a href="{{ url_for('product.index') }}" class="btn btn-info mr-2">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

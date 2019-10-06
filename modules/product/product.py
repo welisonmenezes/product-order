@@ -71,4 +71,14 @@ def edit(id):
 @productBP.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete(id):
-    return 'delete'
+    product = Product()
+    ret = product.get(id)
+    if not product.id:
+        flash(ret, 'info')
+        return redirect(url_for('product.index'))
+    if request.method == 'POST':
+        ret = product.delete()
+        flash(ret, 'info')
+        return redirect(url_for('product.index'))
+    title = 'Deseja realmente deletar o produt ' + str(product.id) + '?'
+    return render_template('product_delete.html', productId=id, title=title), 200
