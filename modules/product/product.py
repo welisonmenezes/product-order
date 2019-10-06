@@ -3,13 +3,20 @@ from flask import current_app, Blueprint, render_template, request, url_for, fla
 from .productForm import ProductForm
 from models.Product import Product
 from decorators.hasPermission import login_required
+from base64 import b64encode
 
 productBP = Blueprint('product', __name__, url_prefix='/product', template_folder='templates/', static_folder='static/')
 
 @productBP.route('/')
 @login_required
 def index():
-    return render_template('product.html'), 200
+    product = Product()
+    products = product.getAll()
+    images = []
+    for product in products:
+        images.append(b64encode(product[3]).decode("utf-8"))
+    print(images[3])
+    return render_template('product.html', products=products, images=images), 200
 
 @productBP.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -28,3 +35,15 @@ def add():
             flash(ret, 'info')
             return redirect(url_for('product.add'))
     return render_template('product_form.html', form=form, title=title), 200
+
+
+@productBP.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    return 'edit'
+
+
+@productBP.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    return 'delete'

@@ -16,73 +16,50 @@
                 <div class="card">
                     <div class="card-body">
                         <h2>Produtos</h2>
+                        {% from "macros/messageFlash.html" import render_message %}
+                        {{ render_message() }}
                         <hr />
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Imagem</th>
-                                    <th>Código</th>
-                                    <th>Name</th>
-                                    <th>Created</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="py-1">
-                                        <img src="{{ url_for('static', filename='images/pic-1.png') }}"
-                                            alt="image">
-                                    </td>
-                                    <td>53275531</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>12 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-success">Success</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1">
-                                        <img src="{{ url_for('static', filename='images/pic-1.png') }}"
-                                            alt="image">
-                                    </td>
-                                    <td>53275531</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>12 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-danger">Danger</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1">
-                                        <img src="{{ url_for('static', filename='images/pic-1.png') }}"
-                                            alt="image">
-                                    </td>
-                                    <td>53275531</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>12 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-info">Info</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1">
-                                        <img src="{{ url_for('static', filename='images/pic-1.png') }}"
-                                            alt="image">
-                                    </td>
-                                    <td>53275531</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>12 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-warning">Warning</label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {% if (products) %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Imagem</th>
+                                        <th>ID</th>
+                                        <th>Descrição</th>
+                                        <th>Valor</th>
+                                        <th>Editar/Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td class="py-1">
+                                                <img src="data:image/png;base64,{{ images[(loop.index-1)] }}"
+                                                    alt="image">
+                                            </td>
+                                            <td>{{ product[0] }}</td>
+                                            <td>{{ product[1] }}</td>
+                                            <td>{{ product[2] }}</td>
+                                            <td>
+                                                <a href="{{ url_for('product.edit', id=product[0]) }}" class="btn-edit">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="{{ url_for('product.delete', id=product[0]) }}" class="btn-delete">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>Nenhum produto encontrado.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12">
                 <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group" role="group" aria-label="First group">
@@ -99,7 +76,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
