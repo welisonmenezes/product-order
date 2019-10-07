@@ -6,9 +6,9 @@
     <div class="content-wrapper">
         <div class="row mb-20">
             <div class="col-md-12 text-right">
-                <button type="button" class="btn btn-primary btn-fw btn-lg">
+                <a href="{{ url_for('client.add') }}" class="btn btn-primary btn-fw btn-lg">
                     <i class="mdi mdi-star-outline"></i>Adicionar Novo
-                </button>
+                </a>
             </div>
         </div>
         <div class="row">
@@ -16,64 +16,45 @@
                 <div class="card">
                     <div class="card-body">
                         <h2>Clientes</h2>
+                        {% from "macros/messageFlash.html" import render_message %}
+                        {{ render_message() }}
                         <hr />
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Profile</th>
-                                    <th>VatNo.</th>
-                                    <th>Created</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Jacob</td>
-                                    <td>53275531</td>
-                                    <td>12 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-danger">Pending</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Messsy</td>
-                                    <td>53275532</td>
-                                    <td>15 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-warning">In progress</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>John</td>
-                                    <td>53275533</td>
-                                    <td>14 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-info">Fixed</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Peter</td>
-                                    <td>53275534</td>
-                                    <td>16 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-success">Completed</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Dave</td>
-                                    <td>53275535</td>
-                                    <td>20 May 2017</td>
-                                    <td>
-                                        <label class="badge badge-warning">In progress</label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {% if (clients) %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Editar/Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for client in clients %}
+                                    <tr>
+                                        <td>{{ client[0] }}</td>
+                                        <td>{{ client[1] }}</td>
+                                        <td>{{ client[10] }}</td>
+                                        <td>
+                                            <a href="{{ url_for('client.edit', id=client[0]) }}" class="btn-edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="{{ url_for('client.delete', id=client[0]) }}" class="btn-delete">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>Nenhum cliente encontrado.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12">
                 <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group" role="group" aria-label="First group">
@@ -90,7 +71,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

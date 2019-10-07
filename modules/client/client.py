@@ -9,7 +9,10 @@ clientBP = Blueprint('client', __name__, url_prefix='/client', template_folder='
 @clientBP.route('/')
 @login_required
 def index():
-    return render_template('client.html'), 200
+    client = Client()
+    clients = client.getAll()
+    return render_template('client.html', clients=clients), 200
+
 
 @clientBP.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -21,7 +24,6 @@ def add():
     if form.cidade.data != 'None':
         form.cidade.choices = [(form.cidade.data, form.cidade.data)]
     if form.validate_on_submit():
-        print('valido')
         client = Client(
             form.nome.data,
             form.endereco.data,
@@ -38,3 +40,15 @@ def add():
         flash(ret, 'info')
         return redirect(url_for('client.add'))
     return render_template('client_form.html', form=form, title=title), 200
+
+
+@clientBP.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    return 'editar'
+
+
+@clientBP.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    return 'deletar'
