@@ -13,6 +13,7 @@ def index():
 @clientBP.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
+    title = 'Cadastrar Cliente'
     form = ClientForm(request.form)
 
     if form.estado.data != 'None':
@@ -23,4 +24,4 @@ def add():
 
     if form.validate_on_submit():
         print('valido')
-    return render_template('client_add.html', form=form), 200
+    return render_template('client_add.html', form=form, title=title), 200
