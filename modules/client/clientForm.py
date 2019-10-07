@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField
+from wtforms import StringField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Length, Email
 
 class NonValidatingSelectField(SelectField):
@@ -30,11 +30,9 @@ class ClientForm(FlaskForm):
         }
     )
 
-    numero = StringField(
+    numero = IntegerField(
         'Número',
-        validators = [
-            Length(min=0, max=11, message='É permitido no máximo 11 caracteres')
-        ],
+        validators = [],
         render_kw = {
             'placeholder':'Número'
         }

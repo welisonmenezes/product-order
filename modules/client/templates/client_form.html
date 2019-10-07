@@ -10,7 +10,9 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h2>Cadastro de cliente</h2>
+                        <h2>{{ title }}</h2>
+                        {% from "macros/messageFlash.html" import render_message %}
+                        {{ render_message() }}
                         <hr />
                         <form class="form-sample" novalidate method="POST">
                             {{ form.csrf_token }}

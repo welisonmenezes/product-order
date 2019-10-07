@@ -55,21 +55,21 @@ class Client():
 
     def insert(self):
         banco = DB()
-        try:
-            c = banco.conexao.cursor()
-            c.execute('INSERT INTO usuarios(nome, endereco, numero, observacao, cep, bairro, cidade, estado, telefone, email) VALUES (%s, %s, %s, %s)' , (self.nome, self.endereco, self.numero, self.observacao, self.cep, self.bairro, self.cidade, self.estado, self.telefone, self.email ))
-            banco.conexao.commit()
-            c.close()
-            return 'Cliente cadastrado com sucesso!'
-        except:
-            return 'Ocorreu um erro na inserção do cliente'
+        #try:
+        c = banco.conexao.cursor()
+        c.execute('INSERT INTO clientes(nome, endereco, numero, observacao, cep, bairro, cidade, estado, telefone, email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' , (self.nome, self.endereco, self.numero, self.observacao, self.cep, self.bairro, self.cidade, self.estado, self.telefone, self.email ))
+        banco.conexao.commit()
+        c.close()
+        return 'Cliente cadastrado com sucesso!'
+        # except:
+        #     return 'Ocorreu um erro na inserção do cliente'
 
 
     def update(self):
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('UPDATE usuarios SET nome = %s , endereco = %s , numero = %s, observacao = %s, cep = %s, bairro = %s, cidade = %s, estado = %s, telefone = %s, email = %s WHERE id = %s' , (self.nome , self.endereco , self.numero, self.observacao, self.cep, self.bairro, self.cidade, self.estado, self.telefone, self.email, self.id))
+            c.execute('UPDATE clientes SET nome = %s , endereco = %s , numero = %s, observacao = %s, cep = %s, bairro = %s, cidade = %s, estado = %s, telefone = %s, email = %s WHERE id = %s' , (self.nome , self.endereco , self.numero, self.observacao, self.cep, self.bairro, self.cidade, self.estado, self.telefone, self.email, self.id))
             banco.conexao.commit()
             c.close()
             return 'Cliente atualizado com sucesso!'
