@@ -16,6 +16,8 @@ def add():
     form = OrderForm(request.form)
     # if request.form:
     #     print(request.form)
+    #print(form.pedidos_produtos.data)
     if form.validate_on_submit():
+        #print(form)
         print('valido')
     return render_template('order_add.html', form=form), 200
