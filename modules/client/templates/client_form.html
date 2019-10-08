@@ -98,8 +98,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success mr-2">Adicionar</button>
-                                    <button class="btn btn-danger">Excluir</button>
+                                    <button type="submit" class="btn btn-success mr-2">Salvar</button>
+                                    {% if clientId %}
+                                        <a href="{{ url_for('client.delete', id=clientId) }}" class="btn btn-danger mr-2">Excluir</a>
+                                    {% endif %}
+                                    <a href="{{ url_for('client.index') }}" class="btn btn-info">Voltar</a>
                                 </div>
                             </div>
                         </form>

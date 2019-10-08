@@ -46,7 +46,45 @@ def add():
 @clientBP.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    return 'editar'
+    title = 'Editar Cliente'
+    client = Client()
+    ret = client.get(id)
+    if not client.id:
+        flash(ret, 'info')
+        return redirect(url_for('client.index'))
+
+    if request.form:
+        form = ClientForm()
+        client.nome = form.nome.data
+        client.telefone = form.telefone.data
+        client.endereco = form.endereco.data
+        client.numero = form.numero.data
+        client.cep = form.cep.data
+        client.bairro = form.bairro.data
+        client.observacao = form.observacao.data
+        client.email = form.email.data
+        client.cidade = form.cidade.data
+        client.estado = form.estado.data
+    else:
+        form = ClientForm()
+        form.nome.data = client.nome
+        form.telefone.data = client.telefone
+        form.endereco.data = client.endereco
+        form.numero.data = client.numero
+        form.cep.data = client.cep
+        form.bairro.data = client.bairro
+        form.observacao.data = client.observacao
+        form.email.data = client.email
+        if client.estado:
+            form.estado.choices = [(client.estado, estados[client.estado])]
+        if client.cidade:
+            form.cidade.choices = [(client.cidade, client.cidade)]
+    
+    if form.validate_on_submit():
+        ret = client.update()
+        flash(ret, 'info')
+        return redirect(url_for('client.edit', id=client.id))
+    return render_template('client_form.html', form=form, title=title, clientId=id), 200
 
 
 @clientBP.route('/delete/<int:id>', methods=['GET', 'POST'])
