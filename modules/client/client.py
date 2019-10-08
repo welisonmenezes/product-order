@@ -90,4 +90,14 @@ def edit(id):
 @clientBP.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete(id):
-    return 'deletar'
+    client = Client()
+    ret = client.get(id)
+    if not client.id:
+        flash(ret, 'info')
+        return redirect(url_for('client.index'))
+    if request.method == 'POST':
+        ret = client.delete()
+        flash(ret, 'info')
+        return redirect(url_for('client.index'))
+    title = 'Deseja realmente deletar o cliente ' + client.nome + '?'
+    return render_template('client_delete.html', clientId=id, title=title), 200
