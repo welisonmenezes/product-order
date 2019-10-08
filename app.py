@@ -11,7 +11,6 @@ from modules.error.error import errorBP
 from modules.client.client import clientBP
 from modules.order.order import orderBP
 from modules.product.product import productBP
-from modules.auth.auth import authBP
 from modules.login.login import loginBP
 from modules.user.user import userBP
 
@@ -21,7 +20,6 @@ app.register_blueprint(homeBP)
 app.register_blueprint(clientBP)
 app.register_blueprint(orderBP)
 app.register_blueprint(productBP)
-app.register_blueprint(authBP)
 app.register_blueprint(loginBP)
 app.register_blueprint(userBP)
 
