@@ -3,6 +3,7 @@ from flask import current_app, Blueprint, render_template, request, url_for, fla
 from .clientForm import ClientForm
 from decorators.hasPermission import login_required
 from models.Client import Client
+from utils.estados import estados
 
 clientBP = Blueprint('client', __name__, url_prefix='/client', template_folder='templates', static_folder='static')
 
@@ -20,7 +21,7 @@ def add():
     title = 'Cadastrar Cliente'
     form = ClientForm(request.form)
     if form.estado.data != 'None':
-        form.estado.choices = [(form.estado.data, form.estado.data)]
+        form.estado.choices = [(form.estado.data, estados[form.estado.data])]
     if form.cidade.data != 'None':
         form.cidade.choices = [(form.cidade.data, form.cidade.data)]
     if form.validate_on_submit():
