@@ -43,8 +43,9 @@ class Order():
         banco = DB()
         try:
             c = banco.conexao.cursor()
-            c.execute('INSERT INTO pedidos(data_hora, descricao, clientes_id) VALUES (%s, %s, %s)' , (self.data_hora, self.descricao, self.clientes_id))
+            c.execute('INSERT INTO pedidos(data_hora, observacao, clientes_id) VALUES (%s, %s, %s)' , (self.data_hora, self.observacao, self.clientes_id))
             banco.conexao.commit()
+            self.id = c.lastrowid
             c.close()
             return 'Pedido cadastrado com sucesso!'
         except:
@@ -55,7 +56,7 @@ class Order():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('UPDATE pedidos SET data_hora = %s , descricao = %s , clientes_id = %s WHERE id = %s' , (self.data_hora , self.descricao , self.clientes_id, self.id))
+            c.execute('UPDATE pedidos SET data_hora = %s , observacao = %s , clientes_id = %s WHERE id = %s' , (self.data_hora , self.observacao , self.clientes_id, self.id))
             banco.conexao.commit()
             c.close()
             return 'Pedido atualizado com sucesso!'

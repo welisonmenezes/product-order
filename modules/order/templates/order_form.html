@@ -13,6 +13,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h2>Cadastro de pedido</h2>
+                            {% from "macros/messageFlash.html" import render_message %}
+                            {{ render_message() }}
                             <hr />
                             <div class="row">
                                 <div class="col-md-6">
