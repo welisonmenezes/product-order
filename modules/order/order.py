@@ -17,6 +17,7 @@ def index():
 def add():
     title = 'Cadastrar Pedido'
     form = OrderForm(request.form)
+
     if form.validate_on_submit():
         now = datetime.now()
         order = Order(

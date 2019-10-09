@@ -2,6 +2,20 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, Length
 
+from models.Client import Client
+clients = Client().getAll()
+client_choices = [('', 'Selecione')]
+if clients:
+    for client in clients:
+        client_choices.append((client[0], client[1]))
+
+from models.Product import Product
+products = Product().getAll()
+product_choices = [('', 'Selecione')]
+if products:
+    for product in products:
+        product_choices.append((product[0], product[1]))
+
 class PedidoProdutoForm(FlaskForm):
     quantidade = StringField(
         'Quantidade',
@@ -39,7 +53,7 @@ class PedidoProdutoForm(FlaskForm):
         validators = [
             DataRequired(message="Campo obrigatório")
         ],
-        choices = [('', 'Selecione'), ('1', 'Produto um'), ('2', 'Produto dois'), ('3', 'Produto três')],
+        choices = product_choices,
         render_kw = {
             'placeholder':'Produto'
         }
@@ -51,7 +65,7 @@ class OrderForm(FlaskForm):
         validators = [
             DataRequired(message="Campo obrigatório")
         ],
-        choices = [('', 'Selecione'), ('1', 'Usuário um'), ('2', 'Usuário dois'), ('3', 'Usuário três')],
+        choices = client_choices,
         render_kw = {
             'placeholder':'Cliente'
         }
