@@ -52,9 +52,12 @@ def edit(id):
         form = ProductForm()
         product.descricao = form.descricao.data
         product.valor = form.valor.data
-        if form.imagem_edicao != '':
+        #print(form.imagem_edicao.data.filename)
+        if form.imagem_edicao.data.filename != '':
             image_edit = request.files.get('imagem_edicao')
             product.imagem = image_edit.read()
+        else:
+            image_edit = product.imagem
     else:
         form = ProductForm()
         form.descricao.data = product.descricao
