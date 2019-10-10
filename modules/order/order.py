@@ -27,7 +27,8 @@ def add():
         )
         ret = order.insert()
         if order.id:
-            print('save products here')
+            for product in form.pedidos_produtos:
+                print(product.produto)
         flash(ret, 'info')
         return redirect(url_for('order.add'))
     return render_template('order_form.html', form=form, title=title), 200

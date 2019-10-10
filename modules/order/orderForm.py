@@ -7,14 +7,16 @@ clients = Client().getAll()
 client_choices = [('', 'Selecione')]
 if clients:
     for client in clients:
-        client_choices.append((client[0], client[1]))
+        client_choices.append((str(client[0]), client[1]))
+
 
 from models.Product import Product
 products = Product().getAll()
 product_choices = [('', 'Selecione')]
 if products:
     for product in products:
-        product_choices.append((product[0], product[1]))
+        product_choices.append((str(product[0]), product[1]))
+
 
 class PedidoProdutoForm(FlaskForm):
     quantidade = StringField(
