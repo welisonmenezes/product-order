@@ -30,14 +30,16 @@ def add():
         ret = order.insert()
         if order.id:
             for product in form.pedidos_produtos:
-                orderproduct = OrderProduct(
-                    order.id,
-                    product.produto.data,
-                    product.quantidade.data,
-                    product.valor.data,
-                    product.observacao.data
-                )
-                orderproduct.insert()
+                check_prod = OrderProduct().getByOrderIdAndProductId(order.id, product.produto.data)
+                if not check_prod:
+                    orderproduct = OrderProduct(
+                        order.id,
+                        product.produto.data,
+                        product.quantidade.data,
+                        product.valor.data,
+                        product.observacao.data
+                    )
+                    orderproduct.insert()
         flash(ret, 'info')
         return redirect(url_for('order.add'))
     return render_template('order_form.html', form=form, title=title, mode='add'), 200
@@ -53,14 +55,7 @@ def edit(id):
         flash(ret, 'info')
         return redirect(url_for('order.index'))
     
-    if request.form:
-        form = OrderForm()
-        # product.descricao = form.descricao.data
-        # product.valor = form.valor.data
-        # if form.imagem_edicao != '':
-        #     image_edit = request.files.get('imagem_edicao')
-        #     product.imagem = image_edit.read()
-    else:
+    if not request.form:
         form = OrderForm()
         form.cliente.data = str(order.clientes_id)
         form.observacao.data = order.observacao
@@ -75,9 +70,12 @@ def edit(id):
                 pp_form.valor.data = pedido_produto[3]
                 pp_form.observacao.data = pedido_produto[4]
                 form.pedidos_produtos.append_entry(pp_form.data)
+    else:
+        form = OrderForm(request.form)
 
     if form.validate_on_submit():
-        ret = order.update()
-        flash(ret, 'info')
-        return redirect(url_for('order.edit', id=product.id))
+        print('legal')
+        #ret = order.update()
+        #flash(ret, 'info')
+        #return redirect(url_for('order.edit', id=product.id))
     return render_template('order_form.html', form=form, title=title, mode='edit'), 200

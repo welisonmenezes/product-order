@@ -22,6 +22,19 @@ class OrderProduct():
         except:
             return None
 
+    
+    def getByOrderIdAndProductId(self, id_pedido, id_produto):
+        banco=DB()
+        try:
+            c = banco.conexao.cursor()
+            c.execute('SELECT pedidos_id, produtos_id, quantidade, valor, observacao FROM pedidos_produtos WHERE pedidos_id = %s AND WHERE produtos_id = %s' , (id_pedido, id_produto))
+            result = c.fetchall()
+            c.close()
+            return result
+        except:
+            return None
+
+
     def insert(self):
         banco = DB()
         try:
