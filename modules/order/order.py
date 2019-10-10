@@ -13,7 +13,9 @@ orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='tem
 @orderBP.route('/')
 @login_required
 def index():
-    return render_template('order.html'), 200
+    order = Order()
+    orders = order.getAll()
+    return render_template('order.html', orders=orders), 200
 
 @orderBP.route('/add', methods=['GET', 'POST'])
 @login_required
