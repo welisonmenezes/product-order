@@ -45,6 +45,7 @@ class Product():
             c = banco.conexao.cursor()
             c.execute('INSERT INTO produtos(descricao, valor, imagem) VALUES (%s, %s, %s)' , (self.descricao, self.valor, self.imagem))
             banco.conexao.commit()
+            self.id = c.lastrowid
             c.close()
             return 'Produto cadastrado com sucesso!'
         except:

@@ -59,6 +59,7 @@ class Client():
         c = banco.conexao.cursor()
         c.execute('INSERT INTO clientes(nome, endereco, numero, observacao, cep, bairro, cidade, estado, telefone, email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' , (self.nome, self.endereco, self.numero, self.observacao, self.cep, self.bairro, self.cidade, self.estado, self.telefone, self.email ))
         banco.conexao.commit()
+        self.id = c.lastrowid
         c.close()
         return 'Cliente cadastrado com sucesso!'
         # except:

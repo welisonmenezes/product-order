@@ -29,7 +29,7 @@ def add():
         )
         ret = user.insert()
         flash(ret, 'info')
-        return redirect(url_for('user.add'))
+        return redirect(url_for('user.edit', id=user.id))
     return render_template('user_form.html', form=form, title=title), 200
 
 

@@ -39,7 +39,7 @@ def add():
         )
         ret = client.insert()
         flash(ret, 'info')
-        return redirect(url_for('client.add'))
+        return redirect(url_for('client.edit', id=client.id))
     return render_template('client_form.html', form=form, title=title), 200
 
 

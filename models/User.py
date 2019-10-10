@@ -66,6 +66,7 @@ class User():
             c = banco.conexao.cursor()
             c.execute('INSERT INTO usuarios(nome, login, senha, grupo) VALUES (%s, %s, %s, %s)' , (self.nome, self.login, self.senha, self.grupo ))
             banco.conexao.commit()
+            self.id = c.lastrowid
             c.close()
             return 'Usuário cadastrado com sucesso!'
         except:
