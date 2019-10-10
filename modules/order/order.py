@@ -19,7 +19,24 @@ def index():
 @login_required
 def add():
     title = 'Cadastrar Pedido'
-    form = OrderForm(request.form)
+    form = OrderForm()
+
+    if request.form:
+        form = OrderForm(request.form)
+
+        pedidos_produtos = copy.deepcopy(form.pedidos_produtos.data)
+
+        for pp1 in form.pedidos_produtos.data:
+            form.pedidos_produtos.pop_entry()
+            
+        for pp in pedidos_produtos:
+            if pp.get('produto') != '' and pp.get('produto') != 'None':
+                pp_form = PedidoProdutoForm()
+                pp_form.produto.data = str(pp.get('produto'))
+                pp_form.quantidade.data = pp.get('quantidade')
+                pp_form.valor.data = pp.get('valor')
+                pp_form.observacao.data = pp.get('observacao')
+                form.pedidos_produtos.append_entry(pp_form.data)
 
     if form.validate_on_submit():
         now = datetime.now()
@@ -42,7 +59,7 @@ def add():
                     )
                     orderproduct.insert()
         flash(ret, 'info')
-        return redirect(url_for('order.add'))
+        return redirect(url_for('order.edit', id=order.id))
     return render_template('order_form.html', form=form, title=title, mode='add'), 200
 
 
@@ -107,8 +124,6 @@ def edit(id):
                     product.observacao.data
                 )
                 orderproduct.insert()
-
-        print('valido')
         ret = order.update()
 
         flash(ret, 'info')
