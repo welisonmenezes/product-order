@@ -6,6 +6,7 @@ from decorators.hasPermission import login_required
 from models.Order import Order
 from models.OrderProduct import OrderProduct
 from datetime import datetime
+import copy
 
 orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='templates/', static_folder='static/')
 
@@ -73,9 +74,43 @@ def edit(id):
     else:
         form = OrderForm(request.form)
 
+        pedidos_produtos = copy.deepcopy(form.pedidos_produtos.data)
+
+        for pp1 in form.pedidos_produtos.data:
+            form.pedidos_produtos.pop_entry()
+            
+        for pp in pedidos_produtos:
+            if pp.get('produto') != '' and pp.get('produto') != 'None':
+                pp_form = PedidoProdutoForm()
+                pp_form.produto.data = str(pp.get('produto'))
+                pp_form.quantidade.data = pp.get('quantidade')
+                pp_form.valor.data = pp.get('valor')
+                pp_form.observacao.data = pp.get('observacao')
+                form.pedidos_produtos.append_entry(pp_form.data)
+
     if form.validate_on_submit():
-        print('legal')
-        #ret = order.update()
-        #flash(ret, 'info')
-        #return redirect(url_for('order.edit', id=product.id))
+        
+        order.observacao = form.observacao.data
+        order.clientes_id = form.cliente.data
+        
+        orderproduct = OrderProduct()
+        orderproduct.pedidos_id = order.id
+        orderproduct.delete()
+        for product in form.pedidos_produtos:
+            check_prod = OrderProduct().getByOrderIdAndProductId(order.id, product.produto.data)
+            if not check_prod:
+                orderproduct = OrderProduct(
+                    order.id,
+                    product.produto.data,
+                    product.quantidade.data,
+                    product.valor.data,
+                    product.observacao.data
+                )
+                orderproduct.insert()
+
+        print('valido')
+        ret = order.update()
+
+        flash(ret, 'info')
+        return redirect(url_for('order.edit', id=order.id))
     return render_template('order_form.html', form=form, title=title, mode='edit'), 200
