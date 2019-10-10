@@ -11,6 +11,17 @@ class OrderProduct():
         self.observacao = observacao
 
 
+    def getByOrderId(self, id_pedido):
+        banco=DB()
+        try:
+            c = banco.conexao.cursor()
+            c.execute('SELECT pedidos_id, produtos_id, quantidade, valor, observacao FROM pedidos_produtos WHERE pedidos_id = %s' , (id_pedido))
+            result = c.fetchall()
+            c.close()
+            return result
+        except:
+            return None
+
     def insert(self):
         banco = DB()
         try:
