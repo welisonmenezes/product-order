@@ -128,4 +128,20 @@ def edit(id):
 
         flash(ret, 'info')
         return redirect(url_for('order.edit', id=order.id))
-    return render_template('order_form.html', form=form, title=title, mode='edit'), 200
+    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id), 200
+
+
+@orderBP.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    order = Order()
+    ret = order.get(id)
+    if not order.id:
+        flash(ret, 'info')
+        return redirect(url_for('order.index'))
+    if request.method == 'POST':
+        ret = order.delete()
+        flash(ret, 'info')
+        return redirect(url_for('order.index'))
+    title = 'Deseja realmente deletar o pedido ' + str(order.id) + '?'
+    return render_template('order_delete.html', orderId=id, title=title), 200
