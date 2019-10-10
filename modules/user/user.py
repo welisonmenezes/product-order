@@ -21,15 +21,21 @@ def add():
     title = 'Cadastrar usuário'
     form = UserForm(request.form)
     if form.validate_on_submit():
-        user = User(
-            form.nome.data,
-            form.login.data,
-            bcrypt.generate_password_hash(form.senha.data),
-            form.grupo.data
-        )
-        ret = user.insert()
-        flash(ret, 'info')
-        return redirect(url_for('user.edit', id=user.id))
+        user_ = User()
+        user_.getByLogin(form.login.data)
+        print(user_.id)
+        if user_.id:
+            flash('O login informado já existe na base de dados', 'warning')
+        else:
+            user = User(
+                form.nome.data,
+                form.login.data,
+                bcrypt.generate_password_hash(form.senha.data),
+                form.grupo.data
+            )
+            ret = user.insert()
+            flash(ret, 'info')
+            return redirect(url_for('user.edit', id=user.id))
     return render_template('user_form.html', form=form, title=title), 200
 
 
