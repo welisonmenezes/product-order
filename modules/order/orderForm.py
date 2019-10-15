@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SelectField, FieldList, FormField
+from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, FloatField
 from wtforms.validators import DataRequired, Length
 
 from models.Client import Client
@@ -19,21 +19,20 @@ if products:
 
 
 class PedidoProdutoForm(FlaskForm):
-    quantidade = StringField(
+    quantidade = IntegerField(
         'Quantidade',
         validators = [
-            DataRequired(message="Campo obrigatório"),
-            Length(min=0, max=11, message='É permitido no máximo 11 caracteres')
+            DataRequired(message="Campo obrigatório (Apenas números)")
         ],
         render_kw = {
             'placeholder':'Quantidade'
         }
     )
 
-    valor = StringField(
+    valor = FloatField(
         'Valor',
         validators = [
-            Length(min=0, max=11, message='É permitido no máximo 11 caracteres')
+            DataRequired(message="Campo obrigatório. (Apenas valor numérico)")
         ],
         render_kw = {
             'placeholder':'Valor'
