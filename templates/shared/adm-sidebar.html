@@ -44,6 +44,7 @@
                 </ul>
             </div>
         </li>
+        {% if session.get('user_grupo', '') == 'admin' %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-client" aria-expanded="false" aria-controls="ui-basic">
                 <i class="menu-icon typcn typcn-coffee"></i>
@@ -57,24 +58,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('client.add') }}">Adicionar</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        {% if session.get('user_grupo', '') == 'admin' %}
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-user" aria-expanded="false" aria-controls="ui-basic">
-                <i class="menu-icon typcn typcn-coffee"></i>
-                <span class="menu-title">Usuários</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-user">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('user.index') }}">Listar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('user.add') }}">Adicionar</a>
                     </li>
                 </ul>
             </div>

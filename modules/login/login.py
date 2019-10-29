@@ -1,6 +1,6 @@
 from flask import current_app, Blueprint, render_template, request, url_for, redirect, session, flash
 from .loginForm import LoginForm
-from models.User import User
+from models.Client import Client
 from app import bcrypt
 
 loginBP = Blueprint('login', __name__, url_prefix='/login', template_folder='templates/', static_folder='static/')
@@ -9,7 +9,7 @@ loginBP = Blueprint('login', __name__, url_prefix='/login', template_folder='tem
 def index():
     form = LoginForm(request.form)
     if form.validate_on_submit():
-        user = User()
+        user = Client()
         user.getByLogin(form.login.data)
         if not user.id:
             flash('Credenciais inválidas')
