@@ -2,6 +2,7 @@ import os
 from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect
 from .clientForm import ClientForm
 from decorators.hasPermission import login_required
+from app import bcrypt
 from models.Client import Client
 from utils.estados import estados
 
@@ -20,26 +21,37 @@ def index():
 def add():
     title = 'Cadastrar Cliente'
     form = ClientForm(request.form)
+    
     if form.estado.data != 'None':
         form.estado.choices = [(form.estado.data, estados[form.estado.data])]
+
     if form.cidade.data != 'None':
         form.cidade.choices = [(form.cidade.data, form.cidade.data)]
+        
     if form.validate_on_submit():
-        client = Client(
-            form.nome.data,
-            form.endereco.data,
-            form.numero.data,
-            form.observacao.data,
-            form.cep.data,
-            form.bairro.data,
-            form.cidade.data,
-            form.estado.data,
-            form.telefone.data,
-            form.email.data,
-        )
-        ret = client.insert()
-        flash(ret, 'info')
-        return redirect(url_for('client.edit', id=client.id))
+        cliente_ = Client()
+        cliente_.getByLogin(form.login.data)
+        if cliente_.id:
+            flash('O login informado já existe na base de dados', 'warning')
+        else:
+            client = Client(
+                form.nome.data,
+                form.endereco.data,
+                form.numero.data,
+                form.observacao.data,
+                form.cep.data,
+                form.bairro.data,
+                form.cidade.data,
+                form.estado.data,
+                form.telefone.data,
+                form.email.data,
+                form.login.data,
+                bcrypt.generate_password_hash(form.senha.data),
+                form.grupo.data,
+            )
+            ret = client.insert()
+            flash(ret, 'info')
+            return redirect(url_for('client.edit', id=client.id))
     return render_template('client_form.html', form=form, title=title), 200
 
 
@@ -65,8 +77,23 @@ def edit(id):
         client.email = form.email.data
         client.cidade = form.cidade.data
         client.estado = form.estado.data
+        #client.login = form.login.data
+        client.grupo = form.grupo.data
+        if form.senha.data != '':
+            client.senha = bcrypt.generate_password_hash(form.senha.data)
+        
+        if form.login.data != client.login:
+            cliente_ = Client()
+            cliente_.getByLogin(form.login.data)
+            if cliente_.id:
+                flash('O login informado já existe na base de dados', 'warning')
+                return redirect(url_for('client.edit', id=client.id))
+            else:
+                client.login = form.login.data
     else:
         form = ClientForm()
+        form.login.data = client.login
+        form.grupo.data = client.grupo
         form.nome.data = client.nome
         form.telefone.data = client.telefone
         form.endereco.data = client.endereco
@@ -80,6 +107,7 @@ def edit(id):
         if client.cidade:
             form.cidade.choices = [(client.cidade, client.cidade)]
     
+    form.senha.validators = []
     if form.validate_on_submit():
         ret = client.update()
         flash(ret, 'info')

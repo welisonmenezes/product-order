@@ -20,6 +20,22 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
+                                            {{ render_field(form.login, '', '45') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            {{ render_field(form.senha, '', '255') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
                                             {{ render_field(form.nome, '', '255') }}
                                         </div>
                                     </div>
@@ -84,7 +100,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            {{ render_field(form.observacao, '', '255') }}
+                                            {{ render_field(form.grupo) }}
                                         </div>
                                     </div>
                                 </div>
@@ -92,6 +108,15 @@
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             {{ render_field(form.email, '', '255') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            {{ render_field(form.observacao, '', '255') }}
                                         </div>
                                     </div>
                                 </div>

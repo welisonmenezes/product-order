@@ -61,6 +61,7 @@
                 </ul>
             </div>
         </li>
+        {% if session.get('user_grupo', '') == 'admin' %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-user" aria-expanded="false" aria-controls="ui-basic">
                 <i class="menu-icon typcn typcn-coffee"></i>
@@ -78,6 +79,7 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
     </ul>
 </nav>
 <!-- partial -->
