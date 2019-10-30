@@ -87,3 +87,11 @@ table .fa{
     max-width: 100px;
     display: block;
 }
+
+.none{
+    display: none;
+}
+
+.table .form-control{
+    max-width: 150px;
+}

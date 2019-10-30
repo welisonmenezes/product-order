@@ -46,17 +46,20 @@
                             <div class="row mb-30">
                                 <div class="col-md-12">
                                     <h5>Produtos</h5>
-                                    <!-- <table class="table">
+                                    <table class="table none" id="p-has">
                                         <thead>
-                                            <th>Imagem</th>
-                                            <th>Id</th>
-                                            <th>Descrição</th>
+                                            <th>Imagem do produto</th>
+                                            <th>Código do produto</th>
+                                            <th>Descrição do produto</th>
+                                            <th>Valor do produto</th>
                                             <th>Quantidade</th>
                                             <th>Valor</th>
-                                            <th>Editar</th>
+                                            <th>Observação</th>
+                                            <th>Editar/Deletar</th>
                                         </thead>
-                                    </table> -->
-                                    <p>Nenhum produto adicionado.</p>
+                                        <tbody id="p-body"></tbody>
+                                    </table>
+                                    <p id="p-not-has">Nenhum produto adicionado.</p>
                                 </div>
                             </div>
 
@@ -131,7 +134,7 @@
                 <input type="hidden" id="p-valor" value="">
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Adicionar</button>
+                <button type="button" class="btn btn-primary" id="add-product">Adicionar</button>
             </div>
         </div>
     </div>
@@ -140,29 +143,5 @@
 {% endblock content %}
 
 {% block footer_script %}
-<script>
-    $('#modalProduto').on('hidden.bs.modal', function (e) {
-        $('#suggestion-search').val('');
-        $('#p-qtd').val('1');
-        $('#p-val').val('');
-        $('#p-desc').val('');
-        $('#p-img').attr('src', '');
-
-        $('#p-id').val('');
-        $('#p-descricao').val('');
-        $('#p-imagem').val('');
-        $('#p-valor').val('');
-    });
-
-
-    $('#p-qtd').on('input', function() {
-        var t = $(this);
-        var prod_val = $('#p-valor').val();
-
-        if (prod_val !== '' && ! isNaN(t.val())) {
-            var valor = parseFloat(prod_val) * parseFloat(t.val());
-            $('#p-val').val(valor.toFixed(2));
-        }
-    });
-</script>
+<script src="{{ url_for('static', filename='js/order-product.js') }}"></script>
 {% endblock footer_script %}
