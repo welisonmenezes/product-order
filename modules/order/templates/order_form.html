@@ -6,99 +6,64 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
+
         <form class="form-sample" novalidate method="POST">
             {{ form.csrf_token }}
             <div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
+
                             <h2>{{ title }}</h2>
                             {% from "macros/messageFlash.html" import render_message %}
                             {{ render_message() }}
                             <hr />
+
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             {{ render_field(form.cliente) }}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             {{ render_field(form.observacao) }}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="produtos-pedidos">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h5>Produtos</h5>
-                                        <hr />
-                                    </div>
-                                </div>
-                                {% for pedido_produto in form.pedidos_produtos %}
-                                    {{ pedido_produto.hidden_tag() }}
-                                    <div class="row-pp">
-                                        <span class="remove-produto btn btn-danger hide">Remover</span>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h6>Produto {{ loop.index }}</h6>
-                                                <hr />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.produto) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.quantidade) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.valor) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.observacao) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <button type="button" class="btn btn-success mr-2 add-produto">Adicionar produto</button>
-                                        </div>
-                                    </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary mr-2 mt-25" data-toggle="modal"
+                                        data-target="#modalProduto">Adicionar produto</button>
                                 </div>
                             </div>
+                            <hr />
 
+                            <div class="row mb-30">
+                                <div class="col-md-12">
+                                    <h5>Produtos</h5>
+                                    <!-- <table class="table">
+                                        <thead>
+                                            <th>Imagem</th>
+                                            <th>Id</th>
+                                            <th>Descrição</th>
+                                            <th>Quantidade</th>
+                                            <th>Valor</th>
+                                            <th>Editar</th>
+                                        </thead>
+                                    </table> -->
+                                    <p>Nenhum produto adicionado.</p>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success mr-2">Salvar pedido</button>
                                     {% if orderId %}
-                                        <a href="{{ url_for('order.delete', id=orderId) }}" class="btn btn-danger mr-2">Excluir</a>
+                                    <a href="{{ url_for('order.delete', id=orderId) }}"
+                                        class="btn btn-danger mr-2">Excluir</a>
                                     {% endif %}
                                     <a href="{{ url_for('order.index') }}" class="btn btn-info">Voltar</a>
                                 </div>
@@ -107,66 +72,58 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </form>
+
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar produto ao pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Produto</label>
+                            <input class="form-control" placeholder="Produto">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Quantidade</label>
+                            <input class="form-control" placeholder="Quantidade">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Valor</label>
+                            <input class="form-control" placeholder="Valor">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Observação</label>
+                            <input class="form-control" placeholder="Observação">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
     </div>
 </div>
 
 {% endblock content %}
-
-
-{% block footer_script %}
-<script>
-    $(function() {
-        var $this = $('.produtos-pedidos');
-
-        var hideCloseBtnIfOne = function() {
-            if ($('.row-pp').length <= 1) {
-                $('.remove-produto').addClass('hide');
-            } else {
-                $('.remove-produto').removeClass('hide');
-            }
-        }
-        hideCloseBtnIfOne();
-
-        $this.find('.add-produto').click(function() {
-            var oldrow = $this.find('.row-pp').last();
-            var row = oldrow.clone(true, true);
-            var elem_id = row.find(':input')[0].id;
-            var elem_num = parseInt(elem_id.replace(/.*-(\d{1,4})-.*/m, '$1')) + 1;
-            redefineIndexes(elem_num, row, true);
-            oldrow.after(row);
-            hideCloseBtnIfOne();
-        });
-
-        $this.find('.remove-produto').click(function() {
-            if($this.find('.row-pp').length > 1) {
-                var thisRow = $(this).closest('.row-pp');
-                thisRow.remove();
-                $this.find('.row-pp').each(function(index) {
-                    redefineIndexes(index, $(this), false);
-                });
-            }
-            hideCloseBtnIfOne();
-        });
-
-        var redefineIndexes = function(elem_num, row, isAdd) {
-            row.find(':input').each(function() {
-                var id = $(this).attr('id').replace(/[0-9]/g, elem_num);
-                if (isAdd) {
-                    $(this).attr('name', id).attr('id', id).val('').removeAttr('checked');
-                } else {
-                    $(this).attr('name', id).attr('id', id);
-                }
-            });
-            row.find('label').each(function() {
-                var id = $(this).attr('for').replace(/[0-9]/g, elem_num);
-                $(this).attr('for', id);
-            });
-            row.find('h6').html('Produto ' + (elem_num + 1));
-        }
-    });
-</script>
-{% endblock footer_script %}

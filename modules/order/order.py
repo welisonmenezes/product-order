@@ -1,7 +1,7 @@
 import os
 from flask import current_app, Blueprint, render_template, request, url_for, flash,redirect
 from wtforms import FieldList, FormField
-from .orderForm import OrderForm, PedidoProdutoForm
+from .orderForm import OrderForm
 from decorators.hasPermission import login_required
 from models.Order import Order
 from models.OrderProduct import OrderProduct

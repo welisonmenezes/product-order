@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, FloatField
 from wtforms.validators import DataRequired, Length
 
+"""
 from models.Client import Client
 clients = Client().getAll()
 client_choices = [('', 'Selecione')]
@@ -59,16 +60,16 @@ class PedidoProdutoForm(FlaskForm):
             'placeholder':'Produto'
         }
     )
+"""
 
 class OrderForm(FlaskForm):
-    cliente = SelectField(
-        'Cliente',
+    cliente = StringField(
+        'Usuário',
         validators = [
             DataRequired(message="Campo obrigatório")
         ],
-        choices = client_choices,
         render_kw = {
-            'placeholder':'Cliente'
+            'placeholder':'Usuário'
         }
     )
 
@@ -80,9 +81,4 @@ class OrderForm(FlaskForm):
         render_kw = {
             'placeholder':'Observação'
         }
-    )
-
-    pedidos_produtos = FieldList(
-        FormField(PedidoProdutoForm),
-        min_entries=1
     )

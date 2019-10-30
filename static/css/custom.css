@@ -71,3 +71,10 @@ table .fa{
     max-height: 50px;
     border-radius: unset;
 }
+
+.mb-30{
+    margin-bottom: 30px;
+}
+.mt-25{
+    margin-top: 25px;
+}
