@@ -109,7 +109,7 @@ class ClientForm(FlaskForm):
             DataRequired(message='Campo obrigatório'),
             Length(min=1, max=45, message='É permitido no máximo 45 caracteres')
         ],
-        choices=[]
+        choices=[('', 'Cidade')]
     )
 
     estado = NonValidatingSelectField(

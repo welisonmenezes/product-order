@@ -27,4 +27,9 @@ $(window).on('load', function() {
     };
     $('#suggestion-search').easyAutocomplete(options);
 
+
+    $('.phone').mask('00 0000-00009', {clearIfNotMatch: true, placeholder: '00 0000-00000'});
+    $('.money').mask('000000000000.00', {clearIfNotMatch: true, placeholder: '0.0'});
+    $('.cep').mask('00000-000', {clearIfNotMatch: true, placeholder: '00000-000'});
+
 });

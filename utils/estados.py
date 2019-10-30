@@ -1,4 +1,5 @@
 estados = {
+	"": "Estado",
 	"AC": "Acre",
 	"AL": "Alagoas",
 	"AM": "Amazonas",

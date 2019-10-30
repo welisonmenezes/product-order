@@ -33,7 +33,7 @@ def add():
             )
             ret = product.insert()
             flash(ret, 'info')
-            return redirect(url_for('product.edit', id=product.id))
+            return redirect(url_for('product.index'))
     return render_template('product_form.html', form=form, title=title, mode='add'), 200
 
 
