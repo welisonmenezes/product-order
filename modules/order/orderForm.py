@@ -65,6 +65,8 @@ class PedidoProdutoForm(FlaskForm):
 class OrderForm(FlaskForm):
     cliente = HiddenField()
 
+    order_id = HiddenField()
+
     observacao = StringField(
         'Observação',
         validators = [

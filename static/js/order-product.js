@@ -42,11 +42,11 @@ $(window).on('load', function () {
 
 
     // CALULATE THE VALUE BY AMOUNT
-    $('#p-qtd').on('input', function() {
+    $('#p-qtd').on('input', function () {
         var t = $(this);
         var prod_val = $('#p-valor').val();
 
-        if (prod_val !== '' && ! isNaN(t.val())) {
+        if (prod_val !== '' && !isNaN(t.val())) {
             var valor = parseFloat(prod_val) * parseFloat(t.val());
             $('#p-val').val(valor.toFixed(2));
         }
@@ -54,8 +54,38 @@ $(window).on('load', function () {
 
 
     // ADD THE PRODUCT
-    $('#add-product').on('click', function() {
+    $('#add-product').on('click', function () {
 
+        var order_id = $('#order_id').val();
+
+        if (order_id !== '') {
+            addProductToFrontend();
+
+            $('#p-has').removeClass('none');
+            $('#p-not-has').addClass('none');
+            $('#modalProduto').modal('toggle');
+        } else {
+            addProductToBackend();
+        }
+
+
+    });
+
+
+    function addProductToBackend() {
+        $.ajax({
+            method: 'POST',
+            url: '/order/add-order',
+            data: { client: $('#cliente').val(), obs: $('#observacao').val() }
+        }).done(function (data) {
+            if (data && data.order_id) {
+                $('#order_id').val(data.order_id);
+            }
+        });
+    }
+
+
+    function addProductToFrontend() {
         var row = $('<tr>');
 
         var td_img = $('<td><img src="data:image/png;base64,' + $('#p-imagem').val() + '" /></td>');
@@ -83,10 +113,6 @@ $(window).on('load', function () {
         row.append(td_edit);
 
         $('#p-body').append(row)
-
-        $('#p-has').removeClass('none');
-        $('#p-not-has').addClass('none');
-        $('#modalProduto').modal('toggle');
-    });
+    }
 
 });

@@ -1,5 +1,5 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session, jsonify
 from wtforms import FieldList, FormField
 from .orderForm import OrderForm
 from decorators.hasPermission import login_required
@@ -148,3 +148,21 @@ def delete(id):
         return redirect(url_for('order.index'))
     title = 'Deseja realmente deletar o pedido ' + str(order.id) + '?'
     return render_template('order_delete.html', orderId=id, title=title), 200
+
+
+@orderBP.route('/add-order', methods=['POST'])
+@login_required
+def search_prod():
+    if (request.form['client']):
+        now = datetime.now()
+        order = Order(
+            now.strftime("%y-%m-%d %H:%M:%S"),
+            request.form['obs'],
+            request.form['client']
+        )
+        ret = order.insert()
+        if ret == 'Pedido cadastrado com sucesso!':
+            return jsonify({'order_id': order.id})
+        else:
+            return jsonify({'message': ret})
+    return jsonify({'message': 'O parâmetro ID do cliente é obrigatório'})
