@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% from "macros/textFieldMacro.html" import render_field %}
+{% from "macros/textFieldMacro.html" import render_field, render_hidden_field %}
 
 {% block content %}
 
@@ -23,7 +23,9 @@
                                 <div class="col-md-5">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            {{ render_field(form.cliente) }}
+                                            <label>Cliente</label>
+                                            <input type="text" class="form-control" disabled value="{{ session.get('user_nome', '') }}" >
+                                            {{ render_hidden_field(form.cliente) }}
                                         </div>
                                     </div>
                                 </div>

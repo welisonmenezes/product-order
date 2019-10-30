@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, FloatField
+from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, FloatField, HiddenField
 from wtforms.validators import DataRequired, Length
 
 """
@@ -63,15 +63,7 @@ class PedidoProdutoForm(FlaskForm):
 """
 
 class OrderForm(FlaskForm):
-    cliente = StringField(
-        'Usuário',
-        validators = [
-            DataRequired(message="Campo obrigatório")
-        ],
-        render_kw = {
-            'placeholder':'Usuário'
-        }
-    )
+    cliente = HiddenField()
 
     observacao = StringField(
         'Observação',

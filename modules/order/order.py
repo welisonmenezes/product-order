@@ -1,5 +1,5 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash,redirect
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session
 from wtforms import FieldList, FormField
 from .orderForm import OrderForm
 from decorators.hasPermission import login_required
@@ -22,6 +22,7 @@ def index():
 def add():
     title = 'Cadastrar Pedido'
     form = OrderForm()
+    form.cliente.data = session.get('user_id', '')
 
     if request.form:
         form = OrderForm(request.form)
