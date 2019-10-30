@@ -16,7 +16,7 @@ $(window).on('load', function() {
 
     // SUGGESTION FIELD
     var options = {
-        url: '../static/js/countries.json',
+        url: '/product/search-prod/a',
         getValue: 'name',
         list: {
             onChooseEvent: function() {

@@ -1,5 +1,5 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, jsonify
 from .productForm import ProductForm
 from models.Product import Product
 from decorators.hasPermission import login_required
@@ -84,3 +84,32 @@ def delete(id):
         return redirect(url_for('product.index'))
     title = 'Deseja realmente deletar o produto ' + str(product.id) + '?'
     return render_template('product_delete.html', productId=id, title=title), 200
+
+
+
+@productBP.route('/search-prod/<prod>', methods=['GET'])
+@login_required
+def search_prod(prod):
+    print(prod)
+    return jsonify([
+    {
+        "name": "Caneta Azul",
+        "code": "1"
+    },
+    {
+        "name": "Caderno 10 Matérias",
+        "code": "2"
+    },
+    {
+        "name": "Lapiseira",
+        "code": "3"
+    },
+    {
+        "name": "Borracha",
+        "code": "4"
+    },
+    {
+        "name": "Papel Ofício",
+        "code": "5"
+    }
+])
