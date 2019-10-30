@@ -16,7 +16,9 @@ $(window).on('load', function() {
 
     // SUGGESTION FIELD
     var options = {
-        url: '/product/search-prod/a',
+        url: function(phrase) {
+            return '/product/search-prod/'+phrase;
+        },
         getValue: 'name',
         list: {
             onChooseEvent: function() {
@@ -29,7 +31,7 @@ $(window).on('load', function() {
 
 
     $('.phone').mask('00 0000-00009', {clearIfNotMatch: true, placeholder: '00 0000-00000'});
-    $('.money').mask('000000000000.00', {clearIfNotMatch: true, placeholder: '0.0'});
+    $('.money').mask('9999999999.00', {clearIfNotMatch: true, reverse: true, placeholder: '0.0'});
     $('.cep').mask('00000-000', {clearIfNotMatch: true, placeholder: '00000-000'});
 
 });

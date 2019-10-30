@@ -90,26 +90,10 @@ def delete(id):
 @productBP.route('/search-prod/<prod>', methods=['GET'])
 @login_required
 def search_prod(prod):
-    print(prod)
-    return jsonify([
-    {
-        "name": "Caneta Azul",
-        "code": "1"
-    },
-    {
-        "name": "Caderno 10 Matérias",
-        "code": "2"
-    },
-    {
-        "name": "Lapiseira",
-        "code": "3"
-    },
-    {
-        "name": "Borracha",
-        "code": "4"
-    },
-    {
-        "name": "Papel Ofício",
-        "code": "5"
-    }
-])
+    product = Product()
+    products = product.filterByName(prod)
+    ret_prods = []
+    if products:
+        for p in products:
+            ret_prods.append({"name": p[1], "code": p[0]})
+    return jsonify(ret_prods)
