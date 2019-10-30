@@ -19,11 +19,21 @@ $(window).on('load', function() {
         url: function(phrase) {
             return '/product/search-prod/'+phrase;
         },
-        getValue: 'name',
+        getValue: 'descricao',
         list: {
             onChooseEvent: function() {
                 var selected = $("#suggestion-search").getSelectedItemData();
-                console.log(selected);
+                $('#p-img').attr('src', 'data:image/png;base64,' + selected.imagem);
+
+                if ($('#p-qtd').val() !== '' && ! isNaN($('#p-qtd').val())) {
+                    var valor = parseFloat(selected.valor) * parseFloat($('#p-qtd').val());
+                    $('#p-val').val(valor.toFixed(2));
+                }
+
+                $('#p-id').val(selected.id);
+                $('#p-descricao').val(selected.descricao);
+                $('#p-valor').val(selected.valor);
+                $('#p-imagem').val(selected.imagem);
             }
         } 
     };

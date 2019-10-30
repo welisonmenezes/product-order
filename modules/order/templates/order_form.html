@@ -97,30 +97,39 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label>Produto</label>
-                            <input class="form-control" id="suggestion-search" placeholder="Produto">
+                            <input type="text" class="form-control" id="suggestion-search" placeholder="Produto">
+                            <figure class="prod-preview">
+                                <img id="p-img" />
+                            </figure>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label>Quantidade</label>
-                            <input class="form-control" placeholder="Quantidade">
+                            <input type="number" class="form-control" id="p-qtd" placeholder="Quantidade" value="1">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label>Valor</label>
-                            <input class="form-control" placeholder="Valor">
+                            <input type="text" disabled class="form-control" id="p-val" placeholder="Valor">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label>Observação</label>
-                            <input class="form-control" placeholder="Observação">
+                            <input type="text" class="form-control" id="p-desc" placeholder="Observação">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
+
+                <input type="hidden" id="p-id" value="">
+                <input type="hidden" id="p-descricao" value="">
+                <input type="hidden" id="p-imagem" value="">
+                <input type="hidden" id="p-valor" value="">
+
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary">Adicionar</button>
             </div>
@@ -129,3 +138,31 @@
 </div>
 
 {% endblock content %}
+
+{% block footer_script %}
+<script>
+    $('#modalProduto').on('hidden.bs.modal', function (e) {
+        $('#suggestion-search').val('');
+        $('#p-qtd').val('1');
+        $('#p-val').val('');
+        $('#p-desc').val('');
+        $('#p-img').attr('src', '');
+
+        $('#p-id').val('');
+        $('#p-descricao').val('');
+        $('#p-imagem').val('');
+        $('#p-valor').val('');
+    });
+
+
+    $('#p-qtd').on('input', function() {
+        var t = $(this);
+        var prod_val = $('#p-valor').val();
+
+        if (prod_val !== '' && ! isNaN(t.val())) {
+            var valor = parseFloat(prod_val) * parseFloat(t.val());
+            $('#p-val').val(valor.toFixed(2));
+        }
+    });
+</script>
+{% endblock footer_script %}

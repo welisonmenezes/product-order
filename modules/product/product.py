@@ -95,5 +95,6 @@ def search_prod(prod):
     ret_prods = []
     if products:
         for p in products:
-            ret_prods.append({"name": p[1], "code": p[0]})
+            img = str(b64encode(p[3]).decode("utf-8"))
+            ret_prods.append({"id": p[0], "descricao": p[1], "valor": str(p[2]), "imagem": img})
     return jsonify(ret_prods)
