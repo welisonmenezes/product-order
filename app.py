@@ -12,7 +12,6 @@ from modules.client.client import clientBP
 from modules.order.order import orderBP
 from modules.product.product import productBP
 from modules.login.login import loginBP
-from modules.user.user import userBP
 
 # registra blueprints
 app.register_blueprint(errorBP)
@@ -21,7 +20,6 @@ app.register_blueprint(clientBP)
 app.register_blueprint(orderBP)
 app.register_blueprint(productBP)
 app.register_blueprint(loginBP)
-app.register_blueprint(userBP)
 
 if __name__ == "__main__":
     app.run()

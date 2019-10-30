@@ -25,7 +25,7 @@
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"  aria-expanded="false">
                     <span>{{ session.get('user_nome') }}</span>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                    <a href="{{ url_for('user.edit', id=session.get('user_id')) }}" class="dropdown-item">
+                    <a href="{{ url_for('client.edit', id=session.get('user_id')) }}" class="dropdown-item">
                         Editar Perfil<i class="dropdown-item-icon ti-dashboard"></i>
                     </a>
                     <a href="{{ url_for('login.logout') }}" class="dropdown-item">
