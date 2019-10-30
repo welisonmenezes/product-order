@@ -19,7 +19,7 @@ def index():
 @clientBP.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
-    title = 'Cadastrar Cliente'
+    title = 'Cadastrar Usuário'
     form = ClientForm(request.form)
     
     if form.estado.data != 'None':
@@ -58,7 +58,7 @@ def add():
 @clientBP.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    title = 'Editar Cliente'
+    title = 'Editar Usuário'
     client = Client()
     ret = client.get(id)
     if not client.id:
@@ -127,5 +127,5 @@ def delete(id):
         ret = client.delete()
         flash(ret, 'info')
         return redirect(url_for('client.index'))
-    title = 'Deseja realmente deletar o cliente ' + client.nome + '?'
+    title = 'Deseja realmente deletar o usuário ' + client.nome + '?'
     return render_template('client_delete.html', clientId=id, title=title), 200
