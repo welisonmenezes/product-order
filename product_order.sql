@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Out-2019 às 21:38
+-- Generation Time: 31-Out-2019 às 20:48
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -52,7 +52,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `login`, `senha`, `grupo`, `nome`, `endereco`, `numero`, `observacao`, `cep`, `bairro`, `cidade`, `estado`, `telefone`, `email`) VALUES
-(8, 'welison', '$2b$12$HLmXrD04OduCBeqEqW9Cje69DVAXdhie6E7Ts7RAEthit.te7uxwu', 'admin', 'Welison Menezes', 'Rua teste', 1, 'Na esquina', '12121-213', 'Coral', 'Lages', 'SC', '21 9999-9999', '9999-9999');
+(8, 'welison', '$2b$12$HLmXrD04OduCBeqEqW9Cje69DVAXdhie6E7Ts7RAEthit.te7uxwu', 'admin', 'Welison Menezes', 'Rua teste', 1, 'Na esquina', '12121-213', 'Coral', 'Lages', 'SC', '21 9999-9999', '9999-9999'),
+(9, 'jose', '$2b$12$x7FbvJny2erfjO31pY7QQeZLjgW5tt60yCT8sPMi7YcecEShXEj8S', 'almoxerife', 'José Silva', 'rua do jose', 3, 'jose infos', '', 'Vidgal', 'Goianorte', 'TO', '33 3333-33333', 'jose@email.com');
 
 -- --------------------------------------------------------
 
@@ -67,6 +68,14 @@ CREATE TABLE `pedidos` (
   `clientes_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `data_hora`, `observacao`, `clientes_id`) VALUES
+(40, '2019-10-31 16:06:12', 'Cadastro 1 editado', 8),
+(41, '2019-10-31 16:15:21', 'pedido jose', 9);
+
 -- --------------------------------------------------------
 
 --
@@ -77,9 +86,18 @@ CREATE TABLE `pedidos_produtos` (
   `pedidos_id` int(11) NOT NULL,
   `produtos_id` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL,
-  `valor` decimal(10,0) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
   `observacao` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `pedidos_produtos`
+--
+
+INSERT INTO `pedidos_produtos` (`pedidos_id`, `produtos_id`, `quantidade`, `valor`, `observacao`) VALUES
+(40, 3, 1, '1.11', 'pedido 1 editado'),
+(40, 5, 2, '4.44', 'pedido 2'),
+(41, 3, 11, '12.21', '11 canetas');
 
 -- --------------------------------------------------------
 
@@ -143,13 +161,13 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `produtos`
