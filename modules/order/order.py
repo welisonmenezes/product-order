@@ -7,6 +7,7 @@ from models.Order import Order
 from models.OrderProduct import OrderProduct
 from datetime import datetime
 import copy
+from base64 import b64encode
 
 orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='templates/', static_folder='static/')
 
@@ -53,12 +54,16 @@ def edit(id):
         return redirect(url_for('order.index'))
 
     order_p = OrderProduct()
-    order_p.getByOrderId(order.id)
+    products = order_p.getByOrderId(order.id)
+    images = []
+    for product in products:
+        images.append(b64encode(product[7]).decode("utf-8"))
     
     if not request.form:
         form = OrderForm()
         form.cliente.data = str(order.clientes_id)
         form.observacao.data = order.observacao
+        form.order_id.data = order.id
         orderproduct = OrderProduct()
         pedidos_produtos = orderproduct.getByOrderId(order.id)
     else:
@@ -71,7 +76,7 @@ def edit(id):
         ret = order.update()
         flash(ret, 'info')
         return redirect(url_for('order.edit', id=order.id))
-    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id, clientName=order.cliente_name, pageOrigin='edit-page', products=order_p), 200
+    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id, clientName=order.cliente_name, pageOrigin='edit-page', products=products, images=images), 200
 
 
 @orderBP.route('/delete/<int:id>', methods=['GET', 'POST'])

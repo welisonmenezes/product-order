@@ -15,7 +15,7 @@ class OrderProduct():
         banco=DB()
         try:
             c = banco.conexao.cursor()
-            c.execute('SELECT pedidos_id, produtos_id, quantidade, valor, observacao FROM pedidos_produtos WHERE pedidos_id = %s' , (id_pedido))
+            c.execute('SELECT pedidos_produtos.pedidos_id, pedidos_produtos.produtos_id, pedidos_produtos.quantidade, pedidos_produtos.valor, pedidos_produtos.observacao, produtos.descricao, produtos.valor, produtos.imagem FROM pedidos_produtos LEFT JOIN produtos ON pedidos_produtos.produtos_id = produtos.id WHERE pedidos_produtos.pedidos_id = %s' , (id_pedido))
             result = c.fetchall()
             c.close()
             return result

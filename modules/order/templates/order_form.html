@@ -49,11 +49,11 @@
                                 </div>
                             </div>
                             <hr />
-
+                            
                             <div class="row mb-30">
                                 <div class="col-md-12">
                                     <h5>Produtos</h5>
-                                    <table class="table none" id="p-has">
+                                    <table class="table {{ 'none' if not products or products=='None' else '' }}" id="p-has">
                                         <thead>
                                             <tr>
                                                 <th>Imagem</th>
@@ -66,9 +66,31 @@
                                                 <th>&nbsp;</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="p-body"></tbody>
+                                        <tbody id="p-body">
+                                            {% for product in products %}
+                                            <tr>
+                                                <td>
+                                                    <img src="data:image/png;base64,{{ images[(loop.index-1)] }}">
+                                                </td>
+                                                <td class="row-id">{{ product[1] }}</td>
+                                                <td>{{ product[5] }}</td>
+                                                <td class="row-value">{{ product[6] }}</td>
+                                                <td>
+                                                    <input type="number" class="form-control edit-qtd-field" value="{{ product[2] }}">
+                                                </td>
+                                                <td class="row-total">{{ product[3] }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control" value="{{ product[4] }}">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary p-edit">Editar</button>
+                                                    <button type="button" class="btn btn-danger p-delete">Deletar</button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
                                     </table>
-                                    <p id="p-not-has">Nenhum produto adicionado.</p>
+                                    <p id="p-not-has" class="{{ 'none' if products and products!='None' else '' }}">Nenhum produto adicionado.</p>
                                 </div>
                             </div>
 
