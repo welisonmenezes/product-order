@@ -51,6 +51,9 @@ def edit(id):
     if not order.id:
         flash(ret, 'info')
         return redirect(url_for('order.index'))
+
+    order_p = OrderProduct()
+    order_p.getByOrderId(order.id)
     
     if not request.form:
         form = OrderForm()
@@ -58,56 +61,17 @@ def edit(id):
         form.observacao.data = order.observacao
         orderproduct = OrderProduct()
         pedidos_produtos = orderproduct.getByOrderId(order.id)
-        if pedidos_produtos:
-            form.pedidos_produtos.pop_entry()
-            for pedido_produto in pedidos_produtos:
-                pp_form = PedidoProdutoForm()
-                pp_form.produto.data = str(pedido_produto[1])
-                pp_form.quantidade.data = pedido_produto[2]
-                pp_form.valor.data = pedido_produto[3]
-                pp_form.observacao.data = pedido_produto[4]
-                form.pedidos_produtos.append_entry(pp_form.data)
     else:
         form = OrderForm(request.form)
-
-        pedidos_produtos = copy.deepcopy(form.pedidos_produtos.data)
-
-        for pp1 in form.pedidos_produtos.data:
-            form.pedidos_produtos.pop_entry()
-            
-        for pp in pedidos_produtos:
-            if pp.get('produto') != '' and pp.get('produto') != 'None':
-                pp_form = PedidoProdutoForm()
-                pp_form.produto.data = str(pp.get('produto'))
-                pp_form.quantidade.data = pp.get('quantidade')
-                pp_form.valor.data = pp.get('valor')
-                pp_form.observacao.data = pp.get('observacao')
-                form.pedidos_produtos.append_entry(pp_form.data)
 
     if form.validate_on_submit():
         
         order.observacao = form.observacao.data
         order.clientes_id = form.cliente.data
-        
-        orderproduct = OrderProduct()
-        orderproduct.pedidos_id = order.id
-        orderproduct.delete()
-        for product in form.pedidos_produtos:
-            check_prod = OrderProduct().getByOrderIdAndProductId(order.id, product.produto.data)
-            if not check_prod:
-                orderproduct = OrderProduct(
-                    order.id,
-                    product.produto.data,
-                    product.quantidade.data,
-                    product.valor.data,
-                    product.observacao.data
-                )
-                orderproduct.insert()
         ret = order.update()
-
         flash(ret, 'info')
         return redirect(url_for('order.edit', id=order.id))
-    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id), 200
+    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id, clientName=order.cliente_name, pageOrigin='edit-page', products=order_p), 200
 
 
 @orderBP.route('/delete/<int:id>', methods=['GET', 'POST'])

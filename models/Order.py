@@ -7,6 +7,7 @@ class Order():
         self.data_hora = data_hora
         self.observacao = observacao
         self.clientes_id = clientes_id
+        self.cliente_name = None
 
 
     def getAll(self):
@@ -25,12 +26,13 @@ class Order():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('SELECT id, data_hora, observacao, clientes_id FROM pedidos WHERE id = %s' , (id_pedido))
+            c.execute('SELECT pedidos.id, pedidos.data_hora, pedidos.observacao, pedidos.clientes_id, clientes.nome FROM pedidos LEFT JOIN clientes ON pedidos.clientes_id = clientes.id WHERE pedidos.id = %s' , (id_pedido))
             for linha in c:
                 self.id=linha[0]
                 self.data_hora=linha[1]
                 self.observacao=linha[2]
                 self.clientes_id=linha[3]
+                self.cliente_name=linha[4]
             c.close()
             if not self.id:
                 return 'Pedido não encontrado!'
