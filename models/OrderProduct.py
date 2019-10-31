@@ -15,7 +15,7 @@ class OrderProduct():
         banco=DB()
         try:
             c = banco.conexao.cursor()
-            c.execute('SELECT pedidos_id, produtos_id, quantidade, valor, observacao FROM pedidos_produtos WHERE pedidos_id = %s' , (id_pedido))
+            c.execute('SELECT pedidos_produtos.pedidos_id, pedidos_produtos.produtos_id, pedidos_produtos.quantidade, pedidos_produtos.valor, pedidos_produtos.observacao, produtos.descricao, produtos.valor, produtos.imagem FROM pedidos_produtos LEFT JOIN produtos ON pedidos_produtos.produtos_id = produtos.id WHERE pedidos_produtos.pedidos_id = %s' , (id_pedido))
             result = c.fetchall()
             c.close()
             return result
@@ -58,7 +58,7 @@ class OrderProduct():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('UPDATE pedidos_produtos SET pedidos_id = %s , produtos_id = %s , quantidade = %s, valor = %s, observacao = %s WHERE pedidos_id = %s AND produtos_id = %s' , (self.pedidos_id , self.produtos_id , self.quatidade, self.valor, self.observacao, self.pedidos_id, self.produtos_id))
+            c.execute('UPDATE pedidos_produtos SET  quantidade = %s, valor = %s, observacao = %s WHERE pedidos_id = %s AND produtos_id = %s' , (self.quatidade, self.valor, self.observacao, self.pedidos_id, self.produtos_id))
             banco.conexao.commit()
             c.close()
             return 'Produto do pedido atualizado com sucesso!'
@@ -70,7 +70,7 @@ class OrderProduct():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('DELETE FROM pedidos_produtos WHERE pedidos_id = %s' , (self.pedidos_id))
+            c.execute('DELETE FROM pedidos_produtos WHERE pedidos_id = %s AND produtos_id = %s' , (self.pedidos_id, self.produtos_id))
             banco.conexao.commit()
             c.close()
             return 'Produto do pedido excluído com sucesso!'

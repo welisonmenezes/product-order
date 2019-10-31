@@ -1,7 +1,7 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session
 from .clientForm import ClientForm
-from decorators.hasPermission import login_required
+from decorators.hasPermission import login_required, must_be_admin
 from app import bcrypt
 from models.Client import Client
 from utils.estados import estados
@@ -10,6 +10,7 @@ clientBP = Blueprint('client', __name__, url_prefix='/client', template_folder='
 
 @clientBP.route('/')
 @login_required
+@must_be_admin
 def index():
     client = Client()
     clients = client.getAll()
@@ -18,8 +19,9 @@ def index():
 
 @clientBP.route('/add', methods=['GET', 'POST'])
 @login_required
+@must_be_admin
 def add():
-    title = 'Cadastrar Cliente'
+    title = 'Cadastrar Usuário'
     form = ClientForm(request.form)
     
     if form.estado.data != 'None':
@@ -58,12 +60,16 @@ def add():
 @clientBP.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    title = 'Editar Cliente'
+    title = 'Editar Usuário'
     client = Client()
     ret = client.get(id)
     if not client.id:
         flash(ret, 'info')
         return redirect(url_for('client.index'))
+
+    if session.get('user_id', None) != id:
+        flash('Você não tem permissão para este recurso', 'danger')
+        return redirect(url_for('home.index'))
 
     if request.form:
         form = ClientForm()
@@ -117,6 +123,7 @@ def edit(id):
 
 @clientBP.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
+@must_be_admin
 def delete(id):
     client = Client()
     ret = client.get(id)
@@ -127,5 +134,5 @@ def delete(id):
         ret = client.delete()
         flash(ret, 'info')
         return redirect(url_for('client.index'))
-    title = 'Deseja realmente deletar o cliente ' + client.nome + '?'
+    title = 'Deseja realmente deletar o usuário ' + client.nome + '?'
     return render_template('client_delete.html', clientId=id, title=title), 200

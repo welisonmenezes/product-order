@@ -1,5 +1,5 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, jsonify
 from .productForm import ProductForm
 from models.Product import Product
 from decorators.hasPermission import login_required
@@ -33,7 +33,7 @@ def add():
             )
             ret = product.insert()
             flash(ret, 'info')
-            return redirect(url_for('product.edit', id=product.id))
+            return redirect(url_for('product.index'))
     return render_template('product_form.html', form=form, title=title, mode='add'), 200
 
 
@@ -84,3 +84,17 @@ def delete(id):
         return redirect(url_for('product.index'))
     title = 'Deseja realmente deletar o produto ' + str(product.id) + '?'
     return render_template('product_delete.html', productId=id, title=title), 200
+
+
+
+@productBP.route('/search-prod/<prod>', methods=['GET'])
+@login_required
+def search_prod(prod):
+    product = Product()
+    products = product.filterByName(prod)
+    ret_prods = []
+    if products:
+        for p in products:
+            img = str(b64encode(p[3]).decode("utf-8"))
+            ret_prods.append({"id": p[0], "descricao": p[1], "valor": str(p[2]), "imagem": img})
+    return jsonify(ret_prods)

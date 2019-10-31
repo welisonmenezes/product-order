@@ -1,12 +1,20 @@
-{% macro render_field(field, cssClass='', maxLength='') %}
+{% macro render_field(field, cssClass='', maxLength='', disabled='') %}
     {{ field.label }}
     {% if field.errors %}
-        {{ field(class="form-control is-invalid "+cssClass, maxLength=""+maxLength) }}
+        {% if disabled != '' %}
+            {{ field(class="form-control is-invalid "+cssClass, maxLength=""+maxLength, disabled=""+disabled) }}
+        {% else %}
+            {{ field(class="form-control is-invalid "+cssClass, maxLength=""+maxLength) }}
+        {% endif %}
     {% for error in field.errors %}
         <span class="invalid-feedback">{{ error }}</span>
     {% endfor %}
     {% else %}
-        {{ field(class="form-control "+cssClass, maxLength=""+maxLength) }}
+        {% if disabled != '' %}
+            {{ field(class="form-control "+cssClass, maxLength=""+maxLength, disabled=""+disabled) }}
+        {% else %}
+            {{ field(class="form-control "+cssClass, maxLength=""+maxLength) }}
+        {% endif %}
     {% endif %}
 {% endmacro %}
 
@@ -23,4 +31,9 @@
     {% for error in field.errors %}
         <span class="invalid-feedback">{{ error }}</span>
     {% endfor %}
+{% endmacro %}
+
+
+{% macro render_hidden_field(field) %}
+    {{ field() }}
 {% endmacro %}

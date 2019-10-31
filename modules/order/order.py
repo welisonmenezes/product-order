@@ -1,12 +1,14 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash,redirect
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session, jsonify
 from wtforms import FieldList, FormField
-from .orderForm import OrderForm, PedidoProdutoForm
+from .orderForm import OrderForm
 from decorators.hasPermission import login_required
 from models.Order import Order
+from models.Client import Client
 from models.OrderProduct import OrderProduct
 from datetime import datetime
 import copy
+from base64 import b64encode
 
 orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='templates/', static_folder='static/')
 
@@ -14,55 +16,40 @@ orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='tem
 @login_required
 def index():
     order = Order()
-    orders = order.getAll()
-    return render_template('order.html', orders=orders), 200
+    user_id = request.args.get('user', None)
+    client = Client()
+    clients = client.getAll()
+
+    if user_id:
+        orders = order.getByUser(user_id)
+    else:
+        orders = order.getAll()
+
+    return render_template('order.html', orders=orders, clients=clients), 200
 
 @orderBP.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
     title = 'Cadastrar Pedido'
     form = OrderForm()
+    form.cliente.data = session.get('user_id', '')
 
     if request.form:
         form = OrderForm(request.form)
 
-        pedidos_produtos = copy.deepcopy(form.pedidos_produtos.data)
-
-        for pp1 in form.pedidos_produtos.data:
-            form.pedidos_produtos.pop_entry()
-            
-        for pp in pedidos_produtos:
-            if pp.get('produto') != '' and pp.get('produto') != 'None':
-                pp_form = PedidoProdutoForm()
-                pp_form.produto.data = str(pp.get('produto'))
-                pp_form.quantidade.data = pp.get('quantidade')
-                pp_form.valor.data = pp.get('valor')
-                pp_form.observacao.data = pp.get('observacao')
-                form.pedidos_produtos.append_entry(pp_form.data)
-
     if form.validate_on_submit():
-        now = datetime.now()
-        order = Order(
-            now.strftime("%y-%m-%d %H:%M:%S"),
-            form.observacao.data,
-            form.cliente.data
-        )
-        ret = order.insert()
-        if order.id:
-            for product in form.pedidos_produtos:
-                check_prod = OrderProduct().getByOrderIdAndProductId(order.id, product.produto.data)
-                if not check_prod:
-                    orderproduct = OrderProduct(
-                        order.id,
-                        product.produto.data,
-                        product.quantidade.data,
-                        product.valor.data,
-                        product.observacao.data
-                    )
-                    orderproduct.insert()
-        flash(ret, 'info')
-        return redirect(url_for('order.edit', id=order.id))
-    return render_template('order_form.html', form=form, title=title, mode='add'), 200
+        if form.order_id.data:
+            order = Order()
+            ret = order.get(form.order_id.data)
+            order.observacao = form.observacao.data
+            order.clientes_id = form.cliente.data
+            ret = order.update()
+            flash(ret, 'info')
+            return redirect(url_for('order.index'))
+        else:
+            flash('É necessário ao menos um produto para cadastrar um pedido.', 'danger')
+            
+    return render_template('order_form.html', form=form, title=title, mode='add', pageOrigin='add-page'), 200
 
 
 @orderBP.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -74,63 +61,31 @@ def edit(id):
     if not order.id:
         flash(ret, 'info')
         return redirect(url_for('order.index'))
+
+    order_p = OrderProduct()
+    products = order_p.getByOrderId(order.id)
+    images = []
+    for product in products:
+        images.append(b64encode(product[7]).decode("utf-8"))
     
     if not request.form:
         form = OrderForm()
         form.cliente.data = str(order.clientes_id)
         form.observacao.data = order.observacao
+        form.order_id.data = order.id
         orderproduct = OrderProduct()
         pedidos_produtos = orderproduct.getByOrderId(order.id)
-        if pedidos_produtos:
-            form.pedidos_produtos.pop_entry()
-            for pedido_produto in pedidos_produtos:
-                pp_form = PedidoProdutoForm()
-                pp_form.produto.data = str(pedido_produto[1])
-                pp_form.quantidade.data = pedido_produto[2]
-                pp_form.valor.data = pedido_produto[3]
-                pp_form.observacao.data = pedido_produto[4]
-                form.pedidos_produtos.append_entry(pp_form.data)
     else:
         form = OrderForm(request.form)
-
-        pedidos_produtos = copy.deepcopy(form.pedidos_produtos.data)
-
-        for pp1 in form.pedidos_produtos.data:
-            form.pedidos_produtos.pop_entry()
-            
-        for pp in pedidos_produtos:
-            if pp.get('produto') != '' and pp.get('produto') != 'None':
-                pp_form = PedidoProdutoForm()
-                pp_form.produto.data = str(pp.get('produto'))
-                pp_form.quantidade.data = pp.get('quantidade')
-                pp_form.valor.data = pp.get('valor')
-                pp_form.observacao.data = pp.get('observacao')
-                form.pedidos_produtos.append_entry(pp_form.data)
 
     if form.validate_on_submit():
         
         order.observacao = form.observacao.data
         order.clientes_id = form.cliente.data
-        
-        orderproduct = OrderProduct()
-        orderproduct.pedidos_id = order.id
-        orderproduct.delete()
-        for product in form.pedidos_produtos:
-            check_prod = OrderProduct().getByOrderIdAndProductId(order.id, product.produto.data)
-            if not check_prod:
-                orderproduct = OrderProduct(
-                    order.id,
-                    product.produto.data,
-                    product.quantidade.data,
-                    product.valor.data,
-                    product.observacao.data
-                )
-                orderproduct.insert()
         ret = order.update()
-
         flash(ret, 'info')
         return redirect(url_for('order.edit', id=order.id))
-    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id), 200
+    return render_template('order_form.html', form=form, title=title, mode='edit', orderId=order.id, clientName=order.cliente_name, pageOrigin='edit-page', products=products, images=images), 200
 
 
 @orderBP.route('/delete/<int:id>', methods=['GET', 'POST'])
@@ -147,3 +102,77 @@ def delete(id):
         return redirect(url_for('order.index'))
     title = 'Deseja realmente deletar o pedido ' + str(order.id) + '?'
     return render_template('order_delete.html', orderId=id, title=title), 200
+
+
+@orderBP.route('/add-order', methods=['POST'])
+@login_required
+def add_order():
+    if (request.form['client']):
+        now = datetime.now()
+        order = Order(
+            now.strftime("%y-%m-%d %H:%M:%S"),
+            request.form['obs'],
+            request.form['client']
+        )
+        ret = order.insert()
+        if ret == 'Pedido cadastrado com sucesso!':
+            return jsonify({'order_id': order.id})
+        else:
+            return jsonify({'message': ret})
+    return jsonify({'message': 'O parâmetro ID do cliente é obrigatório'})
+
+
+@orderBP.route('/add-product-order', methods=['POST'])
+@login_required
+def add_product_order():
+    if (request.form['pedidos_id']):
+        has_product_order = OrderProduct()
+        if has_product_order.getByOrderIdAndProductId(request.form['pedidos_id'], request.form['produtos_id']):
+            return jsonify({'message': 'Este produto já foi cadastrado neste pedido'})
+        order = OrderProduct(
+            request.form['pedidos_id'],
+            request.form['produtos_id'],
+            request.form['quantidade'],
+            request.form['valor'],
+            request.form['observacao']
+        )
+        ret = order.insert()
+        if ret == 'Produto do pedido cadastrado com sucesso!':
+            return jsonify({'pedidos_id': order.pedidos_id, 'produtos_id': order.produtos_id})
+        else:
+            return jsonify({'message': ret})
+    return jsonify({'message': 'Os dados do produto estão incompletos'})
+
+
+@orderBP.route('/delete-product-order', methods=['POST'])
+@login_required
+def delete_product_order():
+    if (request.form['order_id'] and request.form['product_id']):
+        order_p = OrderProduct()
+        order_p.pedidos_id = request.form['order_id']
+        order_p.produtos_id = request.form['product_id']
+        ret = order_p.delete()
+
+        if (request.form['from'] and request.form['from'] == 'add-page'):
+            order = Order()
+            order.id = request.form['order_id']
+            order.delete()
+
+        return jsonify({'message': ret})
+    return jsonify({'message': 'O parâmetro ID do pedido e ID do produto são obrigatórios'})
+
+
+
+@orderBP.route('/edit-product-order', methods=['POST'])
+@login_required
+def edit_product_order():
+    if (request.form['order_id'] and request.form['product_id']):
+        order_p = OrderProduct()
+        order_p.pedidos_id = request.form['order_id']
+        order_p.produtos_id = request.form['product_id']
+        order_p.quatidade = request.form['quantidade']
+        order_p.observacao = request.form['observacao']
+        order_p.valor = request.form['valor']
+        ret = order_p.update()
+        return jsonify({'message': ret})
+    return jsonify({'message': 'O parâmetro ID do pedido e ID do produto são obrigatórios'})

@@ -1,104 +1,106 @@
 {% extends 'base.html' %}
 
-{% from "macros/textFieldMacro.html" import render_field %}
+{% from "macros/textFieldMacro.html" import render_field, render_hidden_field %}
 
 {% block content %}
 
 <div class="main-panel">
     <div class="content-wrapper">
-        <form class="form-sample" novalidate method="POST">
+
+        <form class="form-sample" novalidate method="POST" id="form-order">
             {{ form.csrf_token }}
             <div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
+
                             <h2>{{ title }}</h2>
                             {% from "macros/messageFlash.html" import render_message %}
                             {{ render_message() }}
                             <hr />
+
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            {{ render_field(form.cliente) }}
+                                            <label>Cliente</label>
+                                            {% if pageOrigin == 'add-page' %}
+                                            <input type="text" class="form-control" disabled
+                                                value="{{ session.get('user_nome', '') }}">
+                                            {% else %}
+                                            <input type="text" class="form-control" disabled
+                                                value="{{ clientName }}">
+                                            {% endif %}
+                                            {{ render_hidden_field(form.cliente) }}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             {{ render_field(form.observacao) }}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="produtos-pedidos">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h5>Produtos</h5>
-                                        <hr />
-                                    </div>
-                                </div>
-                                {% for pedido_produto in form.pedidos_produtos %}
-                                    {{ pedido_produto.hidden_tag() }}
-                                    <div class="row-pp">
-                                        <span class="remove-produto btn btn-danger hide">Remover</span>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h6>Produto {{ loop.index }}</h6>
-                                                <hr />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.produto) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.quantidade) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.valor) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        {{ render_field(pedido_produto.observacao) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <button type="button" class="btn btn-success mr-2 add-produto">Adicionar produto</button>
-                                        </div>
-                                    </div>
+                                <div class="col-md-2">
+                                    {{ render_hidden_field(form.order_id) }}
+                                    <button type="button" class="btn btn-primary mr-2 mt-25" data-toggle="modal"
+                                        data-target="#modalProduto">Adicionar produto</button>
                                 </div>
                             </div>
-
+                            <hr />
+                            
+                            <div class="row mb-30">
+                                <div class="col-md-12">
+                                    <h5>Produtos</h5>
+                                    <table class="table {{ 'none' if not products or products=='None' else '' }}" id="p-has">
+                                        <thead>
+                                            <tr>
+                                                <th>Imagem</th>
+                                                <th>Código</th>
+                                                <th>Descrição</th>
+                                                <th>Valor</th>
+                                                <th>Quantidade</th>
+                                                <th>Total</th>
+                                                <th>Observação</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="p-body">
+                                            {% for product in products %}
+                                            <tr>
+                                                <td>
+                                                    <img src="data:image/png;base64,{{ images[(loop.index-1)] }}">
+                                                </td>
+                                                <td class="row-id">{{ product[1] }}</td>
+                                                <td>{{ product[5] }}</td>
+                                                <td class="row-value">{{ product[6] }}</td>
+                                                <td>
+                                                    <input type="number" class="form-control edit-qtd-field qtd-field" value="{{ product[2] }}">
+                                                </td>
+                                                <td class="row-total">{{ product[3] }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control obs-field" value="{{ product[4] }}">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary p-edit">Editar</button>
+                                                    <button type="button" class="btn btn-danger p-delete">Deletar</button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <p id="p-not-has" class="{{ 'none' if products and products!='None' else '' }}">Nenhum produto adicionado.</p>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <input type="hidden" id="page-origin" value="{{ pageOrigin }}" />
                                     <button type="submit" class="btn btn-success mr-2">Salvar pedido</button>
                                     {% if orderId %}
-                                        <a href="{{ url_for('order.delete', id=orderId) }}" class="btn btn-danger mr-2">Excluir</a>
+                                    <a href="{{ url_for('order.delete', id=orderId) }}"
+                                        class="btn btn-danger mr-2">Excluir</a>
                                     {% endif %}
                                     <a href="{{ url_for('order.index') }}" class="btn btn-info">Voltar</a>
                                 </div>
@@ -107,66 +109,94 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </form>
+
+    </div>
+</div>
+
+
+<!-- Modal Form -->
+<div class="modal fade" id="modalProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar produto ao pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Produto</label>
+                            <input type="text" class="form-control" id="suggestion-search" placeholder="Produto">
+                            <figure class="prod-preview">
+                                <img id="p-img" />
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Quantidade</label>
+                            <input type="number" class="form-control" id="p-qtd" placeholder="Quantidade" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Valor</label>
+                            <input type="text" disabled class="form-control" id="p-val" placeholder="Valor">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>Observação</label>
+                            <input type="text" class="form-control" id="p-desc" placeholder="Observação">
+                        </div>
+                    </div>
+                    <p class="text-danger" id="error-msg"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <input type="hidden" id="p-id" value="">
+                <input type="hidden" id="p-descricao" value="">
+                <input type="hidden" id="p-imagem" value="">
+                <input type="hidden" id="p-valor" value="">
+
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="add-product">Adicionar</button>
+                </div>
+                <img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" class="loader none"
+                    alt="loading..." />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Message -->
+<div class="modal fade" id="modalMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="textModalMessage"></p>
+            </div>
+        </div>
     </div>
 </div>
 
 {% endblock content %}
 
-
 {% block footer_script %}
-<script>
-    $(function() {
-        var $this = $('.produtos-pedidos');
-
-        var hideCloseBtnIfOne = function() {
-            if ($('.row-pp').length <= 1) {
-                $('.remove-produto').addClass('hide');
-            } else {
-                $('.remove-produto').removeClass('hide');
-            }
-        }
-        hideCloseBtnIfOne();
-
-        $this.find('.add-produto').click(function() {
-            var oldrow = $this.find('.row-pp').last();
-            var row = oldrow.clone(true, true);
-            var elem_id = row.find(':input')[0].id;
-            var elem_num = parseInt(elem_id.replace(/.*-(\d{1,4})-.*/m, '$1')) + 1;
-            redefineIndexes(elem_num, row, true);
-            oldrow.after(row);
-            hideCloseBtnIfOne();
-        });
-
-        $this.find('.remove-produto').click(function() {
-            if($this.find('.row-pp').length > 1) {
-                var thisRow = $(this).closest('.row-pp');
-                thisRow.remove();
-                $this.find('.row-pp').each(function(index) {
-                    redefineIndexes(index, $(this), false);
-                });
-            }
-            hideCloseBtnIfOne();
-        });
-
-        var redefineIndexes = function(elem_num, row, isAdd) {
-            row.find(':input').each(function() {
-                var id = $(this).attr('id').replace(/[0-9]/g, elem_num);
-                if (isAdd) {
-                    $(this).attr('name', id).attr('id', id).val('').removeAttr('checked');
-                } else {
-                    $(this).attr('name', id).attr('id', id);
-                }
-            });
-            row.find('label').each(function() {
-                var id = $(this).attr('for').replace(/[0-9]/g, elem_num);
-                $(this).attr('for', id);
-            });
-            row.find('h6').html('Produto ' + (elem_num + 1));
-        }
-    });
-</script>
+<script src="{{ url_for('static', filename='js/order-product.js') }}"></script>
 {% endblock footer_script %}

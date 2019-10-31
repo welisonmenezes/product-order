@@ -71,3 +71,31 @@ table .fa{
     max-height: 50px;
     border-radius: unset;
 }
+
+.mb-30{
+    margin-bottom: 30px;
+}
+.mt-25{
+    margin-top: 25px;
+}
+
+.prod-preview{
+    padding: 0;
+    margin: 0;
+}
+.prod-preview img{
+    max-width: 100px;
+    display: block;
+}
+
+.none{
+    display: none;
+}
+
+.table .form-control{
+    max-width: 150px;
+}
+
+.loader{
+    max-width: 60px;
+}

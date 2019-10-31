@@ -74,3 +74,15 @@ class Product():
             return 'Produto excluído com sucesso!'
         except:
             return 'Ocorreu um erro na exclusão do produto'
+
+
+    def filterByName(self, name):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT * FROM produtos WHERE descricao LIKE %s', ('%'+name+'%'))
+            result = c.fetchall()
+            c.close()
+            return result
+        except:
+            return None

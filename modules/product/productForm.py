@@ -16,7 +16,7 @@ class ProductForm(FlaskForm):
         }
     )
 
-    valor = FloatField(
+    valor = StringField(
         'Valor',
         validators = [
             DataRequired(message="Campo obrigatório. (Apenas valor numérico)")
