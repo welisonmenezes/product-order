@@ -27,42 +27,18 @@ def add():
     if request.form:
         form = OrderForm(request.form)
 
-        pedidos_produtos = copy.deepcopy(form.pedidos_produtos.data)
-
-        for pp1 in form.pedidos_produtos.data:
-            form.pedidos_produtos.pop_entry()
-            
-        for pp in pedidos_produtos:
-            if pp.get('produto') != '' and pp.get('produto') != 'None':
-                pp_form = PedidoProdutoForm()
-                pp_form.produto.data = str(pp.get('produto'))
-                pp_form.quantidade.data = pp.get('quantidade')
-                pp_form.valor.data = pp.get('valor')
-                pp_form.observacao.data = pp.get('observacao')
-                form.pedidos_produtos.append_entry(pp_form.data)
-
     if form.validate_on_submit():
-        now = datetime.now()
-        order = Order(
-            now.strftime("%y-%m-%d %H:%M:%S"),
-            form.observacao.data,
-            form.cliente.data
-        )
-        ret = order.insert()
-        if order.id:
-            for product in form.pedidos_produtos:
-                check_prod = OrderProduct().getByOrderIdAndProductId(order.id, product.produto.data)
-                if not check_prod:
-                    orderproduct = OrderProduct(
-                        order.id,
-                        product.produto.data,
-                        product.quantidade.data,
-                        product.valor.data,
-                        product.observacao.data
-                    )
-                    orderproduct.insert()
-        flash(ret, 'info')
-        return redirect(url_for('order.edit', id=order.id))
+        if form.order_id.data:
+            order = Order()
+            ret = order.get(form.order_id.data)
+            order.observacao = form.observacao.data
+            order.clientes_id = form.cliente.data
+            ret = order.update()
+            flash(ret, 'info')
+            return redirect(url_for('order.index'))
+        else:
+            flash('É necessário ao menos um produto para cadastrar um pedido.', 'danger')
+            
     return render_template('order_form.html', form=form, title=title, mode='add'), 200
 
 

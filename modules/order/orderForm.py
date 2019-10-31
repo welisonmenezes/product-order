@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, FloatField, HiddenField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, HiddenField
+from wtforms.validators import Length
 
 class OrderForm(FlaskForm):
     cliente = HiddenField()
