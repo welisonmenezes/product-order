@@ -4,6 +4,7 @@ from wtforms import FieldList, FormField
 from .orderForm import OrderForm
 from decorators.hasPermission import login_required
 from models.Order import Order
+from models.Client import Client
 from models.OrderProduct import OrderProduct
 from datetime import datetime
 import copy
@@ -15,8 +16,16 @@ orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='tem
 @login_required
 def index():
     order = Order()
-    orders = order.getAll()
-    return render_template('order.html', orders=orders), 200
+    user_id = request.args.get('user', None)
+    client = Client()
+    clients = client.getAll()
+
+    if user_id:
+        orders = order.getByUser(user_id)
+    else:
+        orders = order.getAll()
+
+    return render_template('order.html', orders=orders, clients=clients), 200
 
 @orderBP.route('/add', methods=['GET', 'POST'])
 @login_required

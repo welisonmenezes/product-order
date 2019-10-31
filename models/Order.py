@@ -21,6 +21,17 @@ class Order():
         except:
             return None
 
+    def getByUser(self, user_id):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT pedidos.id, pedidos.data_hora, pedidos.observacao, pedidos.clientes_id, clientes.nome FROM pedidos LEFT JOIN clientes ON pedidos.clientes_id = clientes.id WHERE pedidos.clientes_id = %s', (user_id))
+            result = c.fetchall()
+            c.close()
+            return result
+        except:
+            return None
+
 
     def get(self, id_pedido):
         banco=DB()

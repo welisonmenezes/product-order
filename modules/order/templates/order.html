@@ -19,6 +19,25 @@
                         {% from "macros/messageFlash.html" import render_message %}
                         {{ render_message() }}
                         <hr />
+
+                        <form>
+                            <div class="row">
+                                <div class="col-md-1">Filtro:</div>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="user">
+                                        <option value="">Usuário</option>
+                                        {% for client in clients %}
+                                            <option value="{{ client[0] }}">{{ client[4] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr />
+
                         {% if (orders) %}
                             <table class="table">
                                 <thead>
