@@ -140,13 +140,13 @@ $(window).on('load', function () {
         var td_val_u = $('<td class="row-value">' + $('#p-valor').val() + '</td>');
         row.append(td_val_u);
 
-        var td_qtd = $('<td><input type="number" class="form-control edit-qtd-field" value="' + $('#p-qtd').val() + '" /></td>');
+        var td_qtd = $('<td><input type="number" class="form-control edit-qtd-field qtd-field" value="' + $('#p-qtd').val() + '" /></td>');
         row.append(td_qtd);
 
         var td_val = $('<td class="row-total">' + $('#p-val').val() + '</td>');
         row.append(td_val);
 
-        var td_obs = $('<td><input type="text" class="form-control" value="' + $('#p-desc').val() + '" /></td>');
+        var td_obs = $('<td><input type="text" class="form-control obs-field" value="' + $('#p-desc').val() + '" /></td>');
         row.append(td_obs);
 
         var td_edit = $('<td><button type="button" class="btn btn-primary p-edit">Editar</button> <button type="button" class="btn btn-danger p-delete">Deletar</button></td>');
@@ -198,17 +198,6 @@ $(window).on('load', function () {
         }
     }
 
-    
-    // $('#form-order').on('submit', function(e) {
-    //     if ($('#p-body').find('tr').length > 0) {
-    //         return true;
-    //     } else {
-    //         $('#textModalMessage').html('É necessário ao menos um produto para cadastrar um pedido.');
-    //         $('#modalMessage').modal('toggle');
-    //         e.preventDefault();
-    //     }
-    // });
-
 
 
     $('body').on('input', '.edit-qtd-field', function() {
@@ -236,11 +225,28 @@ $(window).on('load', function () {
         var row = t.parent().parent();
         var order_id = $('#order_id').val();
         var product_id = row.find('.row-id').text();
+        var qtd = row.find('.qtd-field').val();
+        var obs = row.find('.obs-field').val();
+        var total = row.find('.row-total').text();
 
-        console.log(order_id, product_id)
-        //deleteProductFromOrder(order_id, product_id, row);
+        editProductFromOrder(order_id, product_id, qtd, obs, total);
     });
 
+
+    function editProductFromOrder(order_id, product_id, qtd, obs, total) {
+        $.ajax({
+            method: 'POST',
+            url: '/order/edit-product-order',
+            data: { order_id: order_id, product_id: product_id, quantidade: qtd, observacao: obs, valor: total }
+        }).done(function (data) {
+            if (data && data.message) {
+                $('#textModalMessage').html(data.message);
+            } else {
+                $('#textModalMessage').html('Desculpe, ocorreu um problema ao editar este item.');
+            }
+            $('#modalMessage').modal('toggle');
+        });
+    }
 
 
 });

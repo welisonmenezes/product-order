@@ -58,7 +58,7 @@ class OrderProduct():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('UPDATE pedidos_produtos SET pedidos_id = %s , produtos_id = %s , quantidade = %s, valor = %s, observacao = %s WHERE pedidos_id = %s AND produtos_id = %s' , (self.pedidos_id , self.produtos_id , self.quatidade, self.valor, self.observacao, self.pedidos_id, self.produtos_id))
+            c.execute('UPDATE pedidos_produtos SET  quantidade = %s, valor = %s, observacao = %s WHERE pedidos_id = %s AND produtos_id = %s' , (self.quatidade, self.valor, self.observacao, self.pedidos_id, self.produtos_id))
             banco.conexao.commit()
             c.close()
             return 'Produto do pedido atualizado com sucesso!'

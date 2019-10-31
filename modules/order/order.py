@@ -151,3 +151,19 @@ def delete_product_order():
 
         return jsonify({'message': ret})
     return jsonify({'message': 'O parâmetro ID do pedido e ID do produto são obrigatórios'})
+
+
+
+@orderBP.route('/edit-product-order', methods=['POST'])
+@login_required
+def edit_product_order():
+    if (request.form['order_id'] and request.form['product_id']):
+        order_p = OrderProduct()
+        order_p.pedidos_id = request.form['order_id']
+        order_p.produtos_id = request.form['product_id']
+        order_p.quatidade = request.form['quantidade']
+        order_p.observacao = request.form['observacao']
+        order_p.valor = request.form['valor']
+        ret = order_p.update()
+        return jsonify({'message': ret})
+    return jsonify({'message': 'O parâmetro ID do pedido e ID do produto são obrigatórios'})
