@@ -24,7 +24,8 @@
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             <label>Cliente</label>
-                                            <input type="text" class="form-control" disabled value="{{ session.get('user_nome', '') }}" >
+                                            <input type="text" class="form-control" disabled
+                                                value="{{ session.get('user_nome', '') }}">
                                             {{ render_hidden_field(form.cliente) }}
                                         </div>
                                     </div>
@@ -125,6 +126,7 @@
                             <input type="text" class="form-control" id="p-desc" placeholder="Observação">
                         </div>
                     </div>
+                    <p class="text-danger" id="error-msg"></p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -134,8 +136,11 @@
                 <input type="hidden" id="p-imagem" value="">
                 <input type="hidden" id="p-valor" value="">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="add-product">Adicionar</button>
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="add-product">Adicionar</button>
+                </div>
+                <img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" class="loader none" alt="loading..." />
             </div>
         </div>
     </div>

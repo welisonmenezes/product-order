@@ -172,6 +172,9 @@ def add_order():
 @login_required
 def add_product_order():
     if (request.form['pedidos_id']):
+        has_product_order = OrderProduct()
+        if has_product_order.getByOrderIdAndProductId(request.form['pedidos_id'], request.form['produtos_id']):
+            return jsonify({'message': 'Este produto já foi cadastrado neste pedido'})
         order = OrderProduct(
             request.form['pedidos_id'],
             request.form['produtos_id'],
@@ -184,4 +187,4 @@ def add_product_order():
             return jsonify({'pedidos_id': order.pedidos_id, 'produtos_id': order.produtos_id})
         else:
             return jsonify({'message': ret})
-    return jsonify({'message': 'teste'})
+    return jsonify({'message': 'Os dados do produto estão incompletos'})

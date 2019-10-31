@@ -38,6 +38,8 @@ $(window).on('load', function () {
         $('#p-descricao').val('');
         $('#p-imagem').val('');
         $('#p-valor').val('');
+
+        $('#error-msg').html('');
     });
 
 
@@ -55,19 +57,27 @@ $(window).on('load', function () {
 
     // ADD THE PRODUCT
     $('#add-product').on('click', function () {
+        var product_id = $('#p-id').val();
 
-        var order_id = $('#order_id').val();
-
-        if (order_id !== '') {
-            addProductToBackend();
+        if (product_id !== '') {
+            var order_id = $('#order_id').val();
+            if (order_id !== '') {
+                addProductToBackend();
+            } else {
+                addOrderToBackend();
+            }
         } else {
-            addOrderToBackend();
+            $('#error-msg').html('Selecione um produto para adicionar ao pedido');
         }
 
     });
 
 
+    // ADD THE ORDER TO DATABASE
     function addOrderToBackend() {
+        $('.actions').addClass('none');
+        $('.loader').removeClass('none');
+        
         $.ajax({
             method: 'POST',
             url: '/order/add-order',
@@ -76,11 +86,21 @@ $(window).on('load', function () {
             if (data && data.order_id) {
                 $('#order_id').val(data.order_id);
                 addProductToBackend();
+            } else {
+                $('#error-msg').html(data.message);
             }
+
+            $('.actions').removeClass('none');
+            $('.loader').addClass('none');
         });
     }
 
+
+    // ADD THE PRODUCT TO ORDER
     function addProductToBackend() {
+        $('.actions').addClass('none');
+        $('.loader').removeClass('none');
+
         $.ajax({
             method: 'POST',
             url: '/order/add-product-order',
@@ -92,14 +112,19 @@ $(window).on('load', function () {
                 observacao: $('#p-desc').val()
             }
         }).done(function (data) {
-            console.log(data)
-            addProductToFrontend();
-            // if (data && data.order_id) {
-            //     $('#order_id').val(data.order_id);
-            // }
+            if (data && data.pedidos_id) {
+                addProductToFrontend();
+            } else {
+                $('#error-msg').html(data.message);
+            }
+
+            $('.actions').removeClass('none');
+            $('.loader').addClass('none');
         });
     }
 
+
+    // ADD THE REGISTERED PRODUCT TO FRONTEND
     function addProductToFrontend() {
         var row = $('<tr>');
 

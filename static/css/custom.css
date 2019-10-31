@@ -95,3 +95,7 @@ table .fa{
 .table .form-control{
     max-width: 150px;
 }
+
+.loader{
+    max-width: 60px;
+}
