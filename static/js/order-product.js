@@ -59,20 +59,15 @@ $(window).on('load', function () {
         var order_id = $('#order_id').val();
 
         if (order_id !== '') {
-            addProductToFrontend();
-
-            $('#p-has').removeClass('none');
-            $('#p-not-has').addClass('none');
-            $('#modalProduto').modal('toggle');
-        } else {
             addProductToBackend();
+        } else {
+            addOrderToBackend();
         }
-
 
     });
 
 
-    function addProductToBackend() {
+    function addOrderToBackend() {
         $.ajax({
             method: 'POST',
             url: '/order/add-order',
@@ -80,10 +75,30 @@ $(window).on('load', function () {
         }).done(function (data) {
             if (data && data.order_id) {
                 $('#order_id').val(data.order_id);
+                addProductToBackend();
             }
         });
     }
 
+    function addProductToBackend() {
+        $.ajax({
+            method: 'POST',
+            url: '/order/add-product-order',
+            data: {
+                pedidos_id: $('#order_id').val(),
+                produtos_id: $('#p-id').val(),
+                quantidade: $('#p-qtd').val(),
+                valor: $('#p-val').val(),
+                observacao: $('#p-desc').val()
+            }
+        }).done(function (data) {
+            console.log(data)
+            addProductToFrontend();
+            // if (data && data.order_id) {
+            //     $('#order_id').val(data.order_id);
+            // }
+        });
+    }
 
     function addProductToFrontend() {
         var row = $('<tr>');
@@ -112,7 +127,10 @@ $(window).on('load', function () {
         var td_edit = $('<td><button type="button" class="btn btn-primary p-edit">Deletar</button> <button type="button" class="btn btn-danger p-delete">Deletar</button></td>');
         row.append(td_edit);
 
-        $('#p-body').append(row)
+        $('#p-body').append(row);
+        $('#p-has').removeClass('none');
+        $('#p-not-has').addClass('none');
+        $('#modalProduto').modal('toggle');
     }
 
 });

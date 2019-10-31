@@ -152,7 +152,7 @@ def delete(id):
 
 @orderBP.route('/add-order', methods=['POST'])
 @login_required
-def search_prod():
+def add_order():
     if (request.form['client']):
         now = datetime.now()
         order = Order(
@@ -166,3 +166,22 @@ def search_prod():
         else:
             return jsonify({'message': ret})
     return jsonify({'message': 'O parâmetro ID do cliente é obrigatório'})
+
+
+@orderBP.route('/add-product-order', methods=['POST'])
+@login_required
+def add_product_order():
+    if (request.form['pedidos_id']):
+        order = OrderProduct(
+            request.form['pedidos_id'],
+            request.form['produtos_id'],
+            request.form['quantidade'],
+            request.form['valor'],
+            request.form['observacao']
+        )
+        ret = order.insert()
+        if ret == 'Produto do pedido cadastrado com sucesso!':
+            return jsonify({'pedidos_id': order.pedidos_id, 'produtos_id': order.produtos_id})
+        else:
+            return jsonify({'message': ret})
+    return jsonify({'message': 'teste'})
