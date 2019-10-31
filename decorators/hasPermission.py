@@ -13,3 +13,14 @@ def login_required(f):
             return redirect(url_for('login.index'))
         return f(*args, **kwargs)   
     return wrap
+
+
+def must_be_admin(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        grupo = session.get('user_grupo', None)
+        if not grupo or grupo != 'admin':
+            flash('Você não tem permissão para este recurso')
+            return redirect(url_for('home.index'))
+        return f(*args, **kwargs)   
+    return wrap

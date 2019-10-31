@@ -188,7 +188,7 @@ $(window).on('load', function () {
     }
 
 
-    // DELETE PRODUCT ORDER FROM FRONTEND
+    // DELETE PRODUCT ORDER ITEM FROM FRONTEND
     function deleteFrontendProductFromOrder(row) {
         row.remove();
         if ($('#p-body').find('tr').length < 1) {
@@ -199,7 +199,7 @@ $(window).on('load', function () {
     }
 
 
-
+    // EDIT THE AMOUT OF PRODUCT ORDER ITEM ON FRONTEND
     $('body').on('input', '.edit-qtd-field', function() {
         var t = $(this);
         var newQtd = t.val();
@@ -218,7 +218,6 @@ $(window).on('load', function () {
     });
 
 
-
     // TRIGGER THE EDIT PRODUCT FORM ORDER ACTIONS
     $('body').on('click', '.p-edit', function() {
         var t = $(this);
@@ -233,6 +232,7 @@ $(window).on('load', function () {
     });
 
 
+    // EDIT PRODUCT ORDER ITEM FROM SERVER
     function editProductFromOrder(order_id, product_id, qtd, obs, total) {
         $.ajax({
             method: 'POST',
@@ -247,6 +247,5 @@ $(window).on('load', function () {
             $('#modalMessage').modal('toggle');
         });
     }
-
 
 });

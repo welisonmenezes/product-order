@@ -14,7 +14,7 @@ class Order():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('SELECT * FROM pedidos')
+            c.execute('SELECT pedidos.id, pedidos.data_hora, pedidos.observacao, pedidos.clientes_id, clientes.nome FROM pedidos LEFT JOIN clientes ON pedidos.clientes_id = clientes.id')
             result = c.fetchall()
             c.close()
             return result
