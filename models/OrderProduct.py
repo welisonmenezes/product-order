@@ -70,7 +70,7 @@ class OrderProduct():
         banco=DB()
         try:
             c=banco.conexao.cursor()
-            c.execute('DELETE FROM pedidos_produtos WHERE pedidos_id = %s' , (self.pedidos_id))
+            c.execute('DELETE FROM pedidos_produtos WHERE pedidos_id = %s AND produtos_id = %s' , (self.pedidos_id, self.produtos_id))
             banco.conexao.commit()
             c.close()
             return 'Produto do pedido excluído com sucesso!'

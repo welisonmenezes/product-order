@@ -73,6 +73,55 @@ $(window).on('load', function () {
     });
 
 
+    $('body').on('click', '.p-delete', function() {
+        var t = $(this);
+        var row = t.parent().parent();
+        var order_id = $('#order_id').val();
+        var product_id = row.find('.row-id').text();
+
+        console.log(order_id, product_id)
+        //$('#modalMessage').modal('toggle');
+        deleteProductFromOrder(order_id, product_id, row);
+    });
+
+
+    function deleteProductFromOrder(order_id, product_id, row) {
+        $.ajax({
+            method: 'POST',
+            url: '/order/delete-product-order',
+            data: { order_id: order_id, product_id: product_id, from: $('#page-origin').val() }
+        }).done(function (data) {
+            if (data && data.message) {
+                $('#textModalMessage').html(data.message);
+                deleteFrontendProductFromOrder(row);
+            } else {
+                $('#textModalMessage').html('Desculpe, ocorreu um problema ao deletar este item.');
+            }
+            $('#modalMessage').modal('toggle');
+        });
+    }
+
+    function deleteFrontendProductFromOrder(row) {
+        row.remove();
+        if ($('#p-body').find('tr').length < 1) {
+            $('#p-has').addClass('none');
+            $('#p-not-has').removeClass('none');
+            $('#order_id').val('');
+        }
+    }
+
+    
+    // $('#form-order').on('submit', function(e) {
+    //     if ($('#p-body').find('tr').length > 0) {
+    //         return true;
+    //     } else {
+    //         $('#textModalMessage').html('É necessário ao menos um produto para cadastrar um pedido.');
+    //         $('#modalMessage').modal('toggle');
+    //         e.preventDefault();
+    //     }
+    // });
+
+
     // ADD THE ORDER TO DATABASE
     function addOrderToBackend() {
         $('.actions').addClass('none');
@@ -157,5 +206,7 @@ $(window).on('load', function () {
         $('#p-not-has').addClass('none');
         $('#modalProduto').modal('toggle');
     }
+
+
 
 });

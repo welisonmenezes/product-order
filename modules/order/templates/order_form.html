@@ -7,7 +7,7 @@
 <div class="main-panel">
     <div class="content-wrapper">
 
-        <form class="form-sample" novalidate method="POST">
+        <form class="form-sample" novalidate method="POST" id="form-order">
             {{ form.csrf_token }}
             <div class="row">
                 <div class="col-12 grid-margin">
@@ -50,14 +50,16 @@
                                     <h5>Produtos</h5>
                                     <table class="table none" id="p-has">
                                         <thead>
-                                            <th>Imagem</th>
-                                            <th>Código</th>
-                                            <th>Descrição</th>
-                                            <th>Valor</th>
-                                            <th>Quantidade</th>
-                                            <th>Total</th>
-                                            <th>Observação</th>
-                                            <th>&nbsp;</th>
+                                            <tr>
+                                                <th>Imagem</th>
+                                                <th>Código</th>
+                                                <th>Descrição</th>
+                                                <th>Valor</th>
+                                                <th>Quantidade</th>
+                                                <th>Total</th>
+                                                <th>Observação</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
                                         </thead>
                                         <tbody id="p-body"></tbody>
                                     </table>
@@ -67,6 +69,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <input type="hidden" id="page-origin" value="{{ pageOrigin }}" />
                                     <button type="submit" class="btn btn-success mr-2">Salvar pedido</button>
                                     {% if orderId %}
                                     <a href="{{ url_for('order.delete', id=orderId) }}"
@@ -86,7 +89,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal Form -->
 <div class="modal fade" id="modalProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -140,7 +143,26 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="add-product">Adicionar</button>
                 </div>
-                <img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" class="loader none" alt="loading..." />
+                <img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" class="loader none"
+                    alt="loading..." />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Message -->
+<div class="modal fade" id="modalMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="textModalMessage"></p>
             </div>
         </div>
     </div>

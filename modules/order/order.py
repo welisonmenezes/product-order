@@ -39,7 +39,7 @@ def add():
         else:
             flash('É necessário ao menos um produto para cadastrar um pedido.', 'danger')
             
-    return render_template('order_form.html', form=form, title=title, mode='add'), 200
+    return render_template('order_form.html', form=form, title=title, mode='add', pageOrigin='add-page'), 200
 
 
 @orderBP.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -164,3 +164,21 @@ def add_product_order():
         else:
             return jsonify({'message': ret})
     return jsonify({'message': 'Os dados do produto estão incompletos'})
+
+
+@orderBP.route('/delete-product-order', methods=['POST'])
+@login_required
+def delete_product_order():
+    if (request.form['order_id'] and request.form['product_id']):
+        order_p = OrderProduct()
+        order_p.pedidos_id = request.form['order_id']
+        order_p.produtos_id = request.form['product_id']
+        ret = order_p.delete()
+
+        if (request.form['from'] and request.form['from'] == 'add-page'):
+            order = Order()
+            order.id = request.form['order_id']
+            order.delete()
+
+        return jsonify({'message': ret})
+    return jsonify({'message': 'O parâmetro ID do pedido e ID do produto são obrigatórios'})
