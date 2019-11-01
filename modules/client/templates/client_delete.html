@@ -13,8 +13,8 @@
                         <h2>{{ title }}</h2>
                         <hr />
                         <form action="{{ url_for('client.delete', id=clientId) }}" method="post">
-                            <button type="submit" class="btn btn-danger">Excluir</button>
-                            <a href="{{ url_for('client.index') }}" class="btn btn-info mr-2">Cancelar</a>
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i>Excluir</button>
+                            <a href="{{ url_for('client.index') }}" class="btn btn-info mr-2"><i class="fa fa-arrow-left"></i>Cancelar</a>
                         </form>
                     </div>
                 </div>

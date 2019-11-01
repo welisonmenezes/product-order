@@ -7,7 +7,7 @@
         <div class="row mb-20">
             <div class="col-md-12 text-right">
                 <a href="{{ url_for('product.add') }}" class="btn btn-primary btn-fw btn-lg">
-                    <i class="mdi mdi-star-outline"></i>Adicionar Novo
+                    <i class="fa fa-plus-circle"></i>Adicionar Produto
                 </a>
             </div>
         </div>
@@ -27,7 +27,7 @@
                                         <th>ID</th>
                                         <th>Descrição</th>
                                         <th>Valor</th>
-                                        <th>Editar/Excluir</th>
+                                        <th>Ver</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,10 +41,7 @@
                                             <td>{{ product[2] }}</td>
                                             <td>
                                                 <a href="{{ url_for('product.edit', id=product[0]) }}" class="btn-edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="{{ url_for('product.delete', id=product[0]) }}" class="btn-delete">
-                                                    <i class="fa fa-trash-o"></i>
+                                                    <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
                                         </tr>

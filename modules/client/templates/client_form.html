@@ -123,11 +123,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success mr-2">Salvar</button>
+                                    <button type="submit" class="btn btn-success mr-2"><i class="fa fa-save"></i>Salvar</button>
                                     {% if clientId and session.get('user_grupo', None) == 'admin' %}
-                                        <a href="{{ url_for('client.delete', id=clientId) }}" class="btn btn-danger mr-2">Excluir</a>
+                                        <a href="{{ url_for('client.delete', id=clientId) }}" class="btn btn-danger mr-2"><i class="fa fa-trash-o"></i>Excluir</a>
                                     {% endif %}
-                                    <a href="{{ url_for('client.index') }}" class="btn btn-info">Voltar</a>
+                                    <a href="{{ url_for('client.index') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>Voltar</a>
                                 </div>
                             </div>
                         </form>

@@ -7,7 +7,7 @@
         <div class="row mb-20">
             <div class="col-md-12 text-right">
                 <a href="{{ url_for('client.add') }}" class="btn btn-primary btn-fw btn-lg">
-                    <i class="mdi mdi-star-outline"></i>Adicionar Novo
+                    <i class="fa fa-plus-circle"></i>Adicionar Usuário
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
                                         <th>ID</th>
                                         <th>Nome</th>
                                         <th>Email</th>
-                                        <th>Editar/Excluir</th>
+                                        <th>Ver</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,10 +37,7 @@
                                         <td>{{ client[10] }}</td>
                                         <td>
                                             <a href="{{ url_for('client.edit', id=client[0]) }}" class="btn-edit">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ url_for('client.delete', id=client[0]) }}" class="btn-delete">
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
                                     </tr>

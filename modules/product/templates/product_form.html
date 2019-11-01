@@ -54,11 +54,11 @@
                             {% endif %}
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{ form.submit(class='btn btn-success mr-2') }}
+                                    <button type="submit" class="btn btn-success mr-2"><i class="fa fa-save"></i>Salvar</button>
                                     {% if productId %}
-                                        <a href="{{ url_for('product.delete', id=productId) }}" class="btn btn-danger mr-2">Excluir</a>
+                                        <a href="{{ url_for('product.delete', id=productId) }}" class="btn btn-danger mr-2"><i class="fa fa-trash-o"></i>Excluir</a>
                                     {% endif %}
-                                    <a href="{{ url_for('product.index') }}" class="btn btn-info">Voltar</a>
+                                    <a href="{{ url_for('product.index') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>Voltar</a>
                                 </div>
                             </div>
                         </form>

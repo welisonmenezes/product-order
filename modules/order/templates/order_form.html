@@ -45,7 +45,7 @@
                                 <div class="col-md-2">
                                     {{ render_hidden_field(form.order_id) }}
                                     <button type="button" class="btn btn-primary mr-2 mt-25" data-toggle="modal"
-                                        data-target="#modalProduto"><i class="fa fa-plus-circle"></i>Adicionar produto</button>
+                                        data-target="#modalProduto"><i class="fa fa-plus-circle"></i>Adicionar Produto</button>
                                 </div>
                             </div>
                             <hr />
@@ -169,7 +169,7 @@
                 <input type="hidden" id="p-valor" value="">
 
                 <div class="actions">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i>Cancelar</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-close"></i>Cancelar</button>
                     <button type="button" class="btn btn-primary" id="add-product"><i class="fa fa-plus-circle"></i>Adicionar</button>
                 </div>
                 <img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" class="loader none"
