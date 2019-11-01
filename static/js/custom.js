@@ -17,4 +17,13 @@ $(window).on('load', function () {
     $('.money').mask('9999999999.00', { clearIfNotMatch: true, reverse: true, placeholder: '0.0' });
     $('.cep').mask('00000-000', { clearIfNotMatch: true, placeholder: '00000-000' });
 
+    (function ($) {
+        'use strict';
+        $(function () {
+            $('[data-toggle="offcanvas"]').on("click", function () {
+                $('.sidebar-offcanvas').toggleClass('active')
+            });
+        });
+    })(jQuery);
+
 });
