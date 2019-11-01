@@ -4,6 +4,7 @@ from .clientForm import ClientForm
 from decorators.hasPermission import login_required, must_be_admin
 from app import bcrypt
 from models.Client import Client
+from models.Order import Order
 from utils.estados import estados
 
 clientBP = Blueprint('client', __name__, url_prefix='/client', template_folder='templates', static_folder='static')
@@ -67,7 +68,7 @@ def edit(id):
         flash(ret, 'info')
         return redirect(url_for('client.index'))
 
-    if session.get('user_id', None) != id:
+    if session.get('user_id', None) != id and session.get('user_grupo', None) != 'admin':
         flash('Você não tem permissão para este recurso', 'danger')
         return redirect(url_for('home.index'))
 
@@ -125,11 +126,19 @@ def edit(id):
 @login_required
 @must_be_admin
 def delete(id):
+
     client = Client()
     ret = client.get(id)
     if not client.id:
         flash(ret, 'info')
         return redirect(url_for('client.index'))
+
+    order = Order()
+    has = order.hasByUser(session.get('user_id'))
+    if has:
+        flash('O usuário não pode ser deletado pois existe algum pedido relacionado à ele.', 'info')
+        return redirect(url_for('client.index'))
+
     if request.method == 'POST':
         ret = client.delete()
         flash(ret, 'info')

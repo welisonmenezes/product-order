@@ -122,7 +122,12 @@ def delete(id):
     if not order.id:
         flash(ret, 'info')
         return redirect(url_for('order.index'))
+
     if request.method == 'POST':
+
+        order_p = OrderProduct()
+        order_p.deleteByPedido(id)
+
         ret = order.delete()
         flash(ret, 'info')
         return redirect(url_for('order.index'))

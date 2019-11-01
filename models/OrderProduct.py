@@ -76,3 +76,29 @@ class OrderProduct():
             return 'Produto do pedido excluído com sucesso!'
         except:
             return 'Ocorreu um erro na exclusão do produto do pedido'
+
+    
+    def deleteByPedido(self, order_id):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('DELETE FROM pedidos_produtos WHERE pedidos_id = %s' , (order_id))
+            banco.conexao.commit()
+            c.close()
+            return True
+        except:
+            return False
+
+
+    def hasByProduct(self, product_id):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT COUNT(pedidos_id) FROM pedidos_produtos WHERE pedidos_produtos.produtos_id = %s', (product_id))
+            result = c.fetchall()
+            c.close()
+            if result[0][0] > 0:
+                return True
+            return False
+        except:
+            return False

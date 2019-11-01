@@ -2,6 +2,7 @@ import os
 from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, jsonify
 from .productForm import ProductForm
 from models.Product import Product
+from models.OrderProduct import OrderProduct
 from decorators.hasPermission import login_required
 from base64 import b64encode
 
@@ -78,13 +79,19 @@ def delete(id):
     if not product.id:
         flash(ret, 'info')
         return redirect(url_for('product.index'))
+
+    order = OrderProduct()
+    has = order.hasByProduct(id)
+    if has:
+        flash('O produto não pode ser deletado pois ele já está relacionado à algum pedido.', 'info')
+        return redirect(url_for('product.index'))
+
     if request.method == 'POST':
         ret = product.delete()
         flash(ret, 'info')
         return redirect(url_for('product.index'))
     title = 'Deseja realmente deletar o produto ' + str(product.id) + '?'
     return render_template('product_delete.html', productId=id, title=title), 200
-
 
 
 @productBP.route('/search-prod/<prod>', methods=['GET'])

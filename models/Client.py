@@ -50,7 +50,7 @@ class Client():
                 self.cidade=linha[10]
                 self.estado=linha[11]
                 self.telefone=linha[12]
-                self.email=linha[12]
+                self.email=linha[13]
             c.close()
             if not self.id:
                 return 'Cliente não encontrado!'

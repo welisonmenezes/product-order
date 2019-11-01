@@ -87,3 +87,17 @@ class Order():
             return 'Pedido excluído com sucesso!'
         except:
             return 'Ocorreu um erro na exclusão do pedido'
+
+
+    def hasByUser(self, user_id):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT COUNT(id) FROM pedidos WHERE pedidos.clientes_id = %s', (user_id))
+            result = c.fetchall()
+            c.close()
+            if result[0][0] > 0:
+                return True
+            return False
+        except:
+            return False
