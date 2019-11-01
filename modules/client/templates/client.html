@@ -32,10 +32,11 @@
                                 <tbody>
                                     {% for client in clients %}
                                     <tr>
-                                        <td>{{ client[0] }}</td>
-                                        <td>{{ client[1] }}</td>
-                                        <td>{{ client[10] }}</td>
+                                        <td><b class="table-label">ID:</b> {{ client[0] }}</td>
+                                        <td><b class="table-label">Nome:</b> {{ client[1] }}</td>
+                                        <td><b class="table-label">E-mail:</b> {{ client[13] }}</td>
                                         <td>
+                                            <b class="table-label">Ver:</b>
                                             <a href="{{ url_for('client.edit', id=client[0]) }}" class="btn-edit">
                                                 <i class="fa fa-eye"></i>
                                             </a>

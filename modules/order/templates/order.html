@@ -22,8 +22,8 @@
 
                         <form>
                             <div class="row">
-                                <div class="col-md-1">Filtro:</div>
-                                <div class="col-md-3">
+                                <div class="col-md-1 col-sm-2 col-3">Filtro:</div>
+                                <div class="col-md-3 col-sm-6 col-6">
                                     <select class="form-control" name="user">
                                         <option value="">Usuário</option>
                                         {% for client in clients %}
@@ -31,7 +31,7 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-1 col-sm-2 col-3">
                                     <button type="submit" class="btn btn-primary">Filtrar</button>
                                 </div>
                             </div>
@@ -51,12 +51,14 @@
                                 <tbody>
                                     {% for order in orders %}
                                         <tr>
-                                            <td>{{ order[0] }}</td>
-                                            <td>{{ order[2] }}</td>
+                                            <td><b class="table-label">ID:</b> {{ order[0] }}</td>
+                                            <td><b class="table-label">Observação:</b> {{ order[2] }}</td>
                                             <td>
+                                                <b class="table-label">Cliente:</b>
                                                 <a href="{{ url_for('client.edit', id=order[3]) }}">{{ order[4] }}</a>
                                             </td>
                                             <td>
+                                                <b class="table-label">Ver:</b>
                                                 <a href="{{ url_for('order.edit', id=order[0]) }}" class="btn-edit">
                                                     <i class="fa fa-eye"></i>
                                                 </a>

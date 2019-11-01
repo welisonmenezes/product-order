@@ -34,12 +34,14 @@
                                     {% for product in products %}
                                         <tr>
                                             <td>
+                                                <b class="table-label">Imagem:</b>
                                                 <img src="data:image/png;base64,{{ images[(loop.index-1)] }}" alt="image">
                                             </td>
-                                            <td>{{ product[0] }}</td>
-                                            <td>{{ product[1] }}</td>
-                                            <td>{{ product[2] }}</td>
+                                            <td><b class="table-label">ID:</b> {{ product[0] }}</td>
+                                            <td><b class="table-label">Descrição:</b> {{ product[1] }}</td>
+                                            <td><b class="table-label">Valor:</b> {{ product[2] }}</td>
                                             <td>
+                                                <b class="table-label">Ver:</b>
                                                 <a href="{{ url_for('product.edit', id=product[0]) }}" class="btn-edit">
                                                     <i class="fa fa-eye"></i>
                                                 </a>

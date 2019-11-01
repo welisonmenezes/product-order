@@ -2,14 +2,6 @@
     margin-bottom: 20px;
 }
 
-/* table .fa{
-    display: inline-block;
-    font-size: 25px;
-    cursor: pointer;
-    vertical-align: middle;
-    color: #ff6258;
-} */
-
 .auth.auth-bg-1 {
     background: url(../images/login_1.jpg);
     background-size: cover;
@@ -108,4 +100,41 @@
 
 .loader{
     max-width: 60px;
+}
+
+.table-label{
+    display: none;
+}
+@media (max-width: 768px) {
+    .table-label{
+        display: inline-block;
+    }
+    .table,
+    .table tbody,
+    .table tfoot,
+    .table tr,
+    .table th,
+    .table td{
+        display: block !important;
+    }
+    .table thead{
+        display: none;
+    }
+    .table td{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border: none !important;
+        height: auto;
+    }
+    .table tr{
+        margin-bottom: 10px;
+        border-bottom: solid 1px #e4e4e4;
+    }
+
+    .btn-group, .btn-group-vertical{
+        display: block;
+    }
+    .btn-group .btn{
+        margin-bottom: 10px;
+    }
 }
