@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Star Admin Premium Bootstrap Admin Dashboard Template</title>
+    <style type="text/css">
+        body {
+            -moz-opacity: 0.00;
+            -khtml-opacity: 0.00;
+            opacity: 0.00;
+        }
+    </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconfonts/font-awesome/css/font-awesome.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/icheck/all.css') }}">
@@ -21,6 +28,14 @@
     <script src="{{ url_for('static', filename='vendors/js/vendor.bundle.addons.js') }}"></script>
     <script src="{{ url_for('static', filename='js/shared/misc.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        $(window).on('load', function () {
+            setTimeout(function () {
+                $("body").fadeTo(300, 1);
+                $(window).resize();
+            }, 1);
+        });
+    </script>
 </body>
 
 </html>
