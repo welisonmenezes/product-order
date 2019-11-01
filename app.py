@@ -21,5 +21,12 @@ app.register_blueprint(orderBP)
 app.register_blueprint(productBP)
 app.register_blueprint(loginBP)
 
+#formata a data para padrão PT_BR
+@app.template_filter('format_datetime')
+def format_datetime(value, format="%d-%m-%Y %H:%M:%S"):
+    if value is None:
+        return ""
+    return value.strftime(format)
+
 if __name__ == "__main__":
     app.run()

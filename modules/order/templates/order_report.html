@@ -31,23 +31,41 @@
             padding: 10px;
             text-align: left;
         }
+
+        table th{
+            background: #e4e4e4;
+        }
+
+        table td{
+            border-bottom: solid 1px #e4e4e4;
+        }
+
+        table img{
+            max-width: 60px;
+            max-height: 60px;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Pedido ID</h1>
-    <hr>
 
     <div>
+        <h2>Informações do pedido</h2>
         <ul>
-            <li><b>Cliente:</b> Welison Menezes</li>
-            <li><b>Observação:</b> Observaçaõ aqui</li>
+            <li><b>Código:</b> {{ order.id }}</li>
+            <li><b>Cliente:</b> {{ order.cliente_name }}</li>
+            <li><b>Código do cliente:</b> {{ order.clientes_id }}</li>
+            <li><b>Data:</b> {{ order.data_hora|format_datetime('%d/%m/%Y') }}</li>
+            <li><b>Observação:</b> {{ order.observacao }}</li>
         </ul>
     </div>
     <hr>
 
     <div>
-        <h2>Produtos</h2>
+        <h2>Produtos do pedido</h2>
+        {% if not products or products=='None' %}
+        <p>O pedido não possui produtos cadastrados.</p>
+        {% else %}
         <table>
             <thead>
                 <tr>
@@ -61,26 +79,20 @@
                 </tr>
             </thead>
             <tbody>
+                {% for product in products %}
                 <tr>
-                    <td>Imagem</td>
-                    <td>3</td>
-                    <td>Caneta Azul</td>
-                    <td>1.11</td>
-                    <td>1</td>
-                    <td>1.11</td>
-                    <td>Observaçaõ aqui</td>
+                    <td><img src="data:image/png;base64,{{ images[(loop.index-1)] }}"></td>
+                    <td>{{ product[1] }}</td>
+                    <td>{{ product[5] }}</td>
+                    <td>{{ product[6] }}</td>
+                    <td>{{ product[2] }}</td>
+                    <td>{{ product[3] }}</td>
+                    <td>{{ product[4] }}</td>
                 </tr>
-                <tr>
-                    <td>Imagem</td>
-                    <td>3</td>
-                    <td>Caneta Azul</td>
-                    <td>1.11</td>
-                    <td>1</td>
-                    <td>1.11</td>
-                    <td>Observaçaõ aqui</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
+        {% endif %}
     </div>
 
 </body>

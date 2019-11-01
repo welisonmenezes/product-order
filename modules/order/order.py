@@ -29,14 +29,27 @@ def index():
     return render_template('order.html', orders=orders, clients=clients), 200
 
 
-@orderBP.route('/report')
+@orderBP.route('/report/<int:id>')
 @login_required
-def report():
-    ren = render_template('order_report.html')
+def report(id):
+
+    order = Order()
+    ret = order.get(id)
+    if not order.id:
+        flash(ret, 'info')
+        return redirect(url_for('order.index'))
+
+    order_p = OrderProduct()
+    products = order_p.getByOrderId(order.id)
+    images = []
+    for product in products:
+        images.append(b64encode(product[7]).decode("utf-8"))
+
+    ren = render_template('order_report.html', products=products, images=images, order=order)
     pdf = pdfkit.from_string(ren, False)
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'attachement; filename=output.pdf'
+    response.headers['Content-Disposition'] = 'attachement; filename=relatorio-pedido.pdf'
     return response
 
 
