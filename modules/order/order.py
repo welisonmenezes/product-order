@@ -148,6 +148,7 @@ def delete(id):
     return render_template('order_delete.html', orderId=id, title=title), 200
 
 
+# ajax
 @orderBP.route('/add-order', methods=['POST'])
 @login_required
 def add_order():
@@ -166,6 +167,7 @@ def add_order():
     return jsonify({'message': 'O parâmetro ID do cliente é obrigatório'})
 
 
+# ajax
 @orderBP.route('/add-product-order', methods=['POST'])
 @login_required
 def add_product_order():
@@ -188,6 +190,7 @@ def add_product_order():
     return jsonify({'message': 'Os dados do produto estão incompletos'})
 
 
+# ajax
 @orderBP.route('/delete-product-order', methods=['POST'])
 @login_required
 def delete_product_order():
@@ -206,7 +209,7 @@ def delete_product_order():
     return jsonify({'message': 'O parâmetro ID do pedido e ID do produto são obrigatórios'})
 
 
-
+# ajax
 @orderBP.route('/edit-product-order', methods=['POST'])
 @login_required
 def edit_product_order():
