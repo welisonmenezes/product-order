@@ -35,7 +35,9 @@
                                         <tr>
                                             <td>
                                                 <b class="table-label">Imagem:</b>
-                                                <img src="data:image/png;base64,{{ images[(loop.index-1)] }}" alt="image">
+                                                <a href="data:image/png;base64,{{ images[(loop.index-1)] }}" data-lightbox="{{ product[0] }}" data-title="{{ product[1] }}">
+                                                    <img src="data:image/png;base64,{{ images[(loop.index-1)] }}" alt="image">
+                                                </a>
                                             </td>
                                             <td><b class="table-label">ID:</b> {{ product[0] }}</td>
                                             <td><b class="table-label">Descrição:</b> {{ product[1] }}</td>

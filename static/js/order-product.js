@@ -128,7 +128,7 @@ $(window).on('load', function () {
     function addProductToFrontend() {
         var row = $('<tr>');
 
-        var td_img = $('<td><img src="data:image/png;base64,' + $('#p-imagem').val() + '" /></td>');
+        var td_img = $('<td><a href="data:image/png;base64,' + $('#p-imagem').val() + '" data-lightbox="' + $('#p-id').val() + '" data-title="' + $('#p-descricao').val() + '"><img src="data:image/png;base64,' + $('#p-imagem').val() + '" /></a></td>');
         row.append(td_img);
 
         var td_id = $('<td class="row-id">' + $('#p-id').val() + '</td>');

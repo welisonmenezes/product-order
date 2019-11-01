@@ -70,7 +70,9 @@
                                             {% for product in products %}
                                             <tr>
                                                 <td>
-                                                    <img src="data:image/png;base64,{{ images[(loop.index-1)] }}">
+                                                    <a href="data:image/png;base64,{{ images[(loop.index-1)] }}" data-lightbox="{{ product[1] }}" data-title="{{ product[5] }}">
+                                                        <img src="data:image/png;base64,{{ images[(loop.index-1)] }}">
+                                                    </a>
                                                 </td>
                                                 <td class="row-id">{{ product[1] }}</td>
                                                 <td>{{ product[5] }}</td>
