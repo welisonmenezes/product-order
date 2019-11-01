@@ -15,11 +15,17 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
+                        {% if session.get('user_grupo', '') != 'user' %}
                         <h2>Pedidos</h2>
+                        {% else %}
+                        <h2>Seus Pedidos</h2>
+                        {% endif %}
+
                         {% from "macros/messageFlash.html" import render_message %}
                         {{ render_message() }}
                         <hr />
 
+                        {% if session.get('user_grupo', '') != 'user' %}
                         <form>
                             <div class="row">
                                 <div class="col-md-1 col-sm-2 col-3">Filtro:</div>
@@ -37,6 +43,7 @@
                             </div>
                         </form>
                         <hr />
+                        {% endif %}
 
                         {% if (orders) %}
                             <table class="table">
@@ -69,7 +76,7 @@
                                 </tbody>
                             </table>
                         {% else %}
-                            <p>Nenhum pedidos encontrado.</p>
+                            <p>Nenhum pedido encontrado.</p>
                         {% endif %}
                     </div>
                 </div>

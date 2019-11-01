@@ -3,7 +3,7 @@ from flask import current_app, Blueprint, render_template, request, url_for, fla
 from .productForm import ProductForm
 from models.Product import Product
 from models.OrderProduct import OrderProduct
-from decorators.hasPermission import login_required
+from decorators.hasPermission import login_required, if_user_bye
 from base64 import b64encode
 
 productBP = Blueprint('product', __name__, url_prefix='/product', template_folder='templates/', static_folder='static/')
@@ -21,6 +21,7 @@ def index():
 
 @productBP.route('/add', methods=['GET', 'POST'])
 @login_required
+@if_user_bye
 def add():
     form = ProductForm()
     title = 'Cadastrar Produto'
@@ -40,6 +41,7 @@ def add():
 
 @productBP.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
+@if_user_bye
 def edit(id):
     title = 'Editar Produto'
     product = Product()
@@ -73,6 +75,7 @@ def edit(id):
 
 @productBP.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
+@if_user_bye
 def delete(id):
     product = Product()
     ret = product.get(id)

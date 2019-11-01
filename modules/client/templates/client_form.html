@@ -127,7 +127,9 @@
                                     {% if clientId and session.get('user_grupo', None) == 'admin' %}
                                         <a href="{{ url_for('client.delete', id=clientId) }}" class="btn btn-danger mr-2"><i class="fa fa-trash-o"></i>Excluir</a>
                                     {% endif %}
+                                    {% if session.get('user_grupo', '') != 'user' %}
                                     <a href="{{ url_for('client.index') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>Voltar</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </form>

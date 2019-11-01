@@ -21,10 +21,13 @@ def index():
     client = Client()
     clients = client.getAll()
 
-    if user_id:
-        orders = order.getByUser(user_id)
+    if session.get('user_grupo', '') != 'user':
+        if user_id:
+            orders = order.getByUser(user_id)
+        else:
+            orders = order.getAll()
     else:
-        orders = order.getAll()
+        orders = order.getByUser(session.get('user_id', ''))
 
     return render_template('order.html', orders=orders, clients=clients), 200
 
@@ -88,6 +91,11 @@ def edit(id):
         flash(ret, 'info')
         return redirect(url_for('order.index'))
 
+    if session.get('user_grupo', '') == 'user':
+        if order.clientes_id != session.get('user_id', ''):
+            flash('Você não tem permissão para acessar este recurso.', 'info')
+            return redirect(url_for('order.index'))
+
     order_p = OrderProduct()
     products = order_p.getByOrderId(order.id)
     images = []
@@ -122,6 +130,11 @@ def delete(id):
     if not order.id:
         flash(ret, 'info')
         return redirect(url_for('order.index'))
+
+    if session.get('user_grupo', '') == 'user':
+        if order.clientes_id != session.get('user_id', ''):
+            flash('Você não tem permissão para acessar este recurso.', 'info')
+            return redirect(url_for('order.index'))
 
     if request.method == 'POST':
 

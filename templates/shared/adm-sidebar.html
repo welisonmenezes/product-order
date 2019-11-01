@@ -10,6 +10,7 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
+        
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-order" aria-expanded="false" aria-controls="ui-basic">
                 <i class="menu-icon typcn typcn-coffee"></i>
@@ -18,15 +19,23 @@
             </a>
             <div class="collapse" id="ui-order">
                 <ul class="nav flex-column sub-menu">
+                    {% if session.get('user_grupo', '') != 'user' %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('order.index') }}">Listar</a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('order.index') }}">Seus Pedidos</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('order.add') }}">Adicionar</a>
                     </li>
                 </ul>
             </div>
         </li>
+
+        {% if session.get('user_grupo', '') != 'user' %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-product" aria-expanded="false" aria-controls="ui-basic">
                 <i class="menu-icon typcn typcn-coffee"></i>
@@ -44,6 +53,8 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
+
         {% if session.get('user_grupo', '') == 'admin' %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-client" aria-expanded="false" aria-controls="ui-basic">
