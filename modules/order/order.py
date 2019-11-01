@@ -1,5 +1,5 @@
 import os
-from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session, jsonify
+from flask import current_app, Blueprint, render_template, request, url_for, flash, redirect, session, jsonify, make_response
 from wtforms import FieldList, FormField
 from .orderForm import OrderForm
 from decorators.hasPermission import login_required
@@ -9,6 +9,7 @@ from models.OrderProduct import OrderProduct
 from datetime import datetime
 import copy
 from base64 import b64encode
+import pdfkit
 
 orderBP = Blueprint('order', __name__, url_prefix='/order', template_folder='templates/', static_folder='static/')
 
@@ -26,6 +27,18 @@ def index():
         orders = order.getAll()
 
     return render_template('order.html', orders=orders, clients=clients), 200
+
+
+@orderBP.route('/report')
+@login_required
+def report():
+    ren = render_template('order_report.html')
+    pdf = pdfkit.from_string(ren, False)
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachement; filename=output.pdf'
+    return response
+
 
 @orderBP.route('/add', methods=['GET', 'POST'])
 @login_required
