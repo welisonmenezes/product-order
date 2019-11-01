@@ -45,7 +45,7 @@
                                 <div class="col-md-2">
                                     {{ render_hidden_field(form.order_id) }}
                                     <button type="button" class="btn btn-primary mr-2 mt-25" data-toggle="modal"
-                                        data-target="#modalProduto">Adicionar produto</button>
+                                        data-target="#modalProduto"><i class="fa fa-plus-circle"></i>Adicionar produto</button>
                                 </div>
                             </div>
                             <hr />
@@ -83,8 +83,8 @@
                                                     <input type="text" class="form-control obs-field" value="{{ product[4] }}">
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary p-edit">Editar</button>
-                                                    <button type="button" class="btn btn-danger p-delete">Deletar</button>
+                                                    <button type="button" class="btn btn-primary p-edit"><i class="fa fa-edit"></i>Editar</button>
+                                                    <button type="button" class="btn btn-danger p-delete"><i class="fa fa-trash-o"></i>Deletar</button>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -97,12 +97,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="hidden" id="page-origin" value="{{ pageOrigin }}" />
-                                    <button type="submit" class="btn btn-success mr-2">Salvar pedido</button>
+                                    <button type="submit" class="btn btn-success mr-2"><i class="fa fa-save"></i>Salvar</button>
                                     {% if orderId %}
+                                    <a href="{{ url_for('order.report', id=orderId) }}"
+                                        class="btn btn-primary mr-2"><i class="fa fa-download"></i>Baixar</a>
                                     <a href="{{ url_for('order.delete', id=orderId) }}"
-                                        class="btn btn-danger mr-2">Excluir</a>
+                                        class="btn btn-danger mr-2"><i class="fa fa-trash-o"></i>Excluir</a>
                                     {% endif %}
-                                    <a href="{{ url_for('order.index') }}" class="btn btn-info">Voltar</a>
+                                    <a href="{{ url_for('order.index') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>Voltar</a>
                                 </div>
                             </div>
 
@@ -167,8 +169,8 @@
                 <input type="hidden" id="p-valor" value="">
 
                 <div class="actions">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="add-product">Adicionar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i>Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="add-product"><i class="fa fa-plus-circle"></i>Adicionar</button>
                 </div>
                 <img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" class="loader none"
                     alt="loading..." />

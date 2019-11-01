@@ -149,7 +149,7 @@ $(window).on('load', function () {
         var td_obs = $('<td><input type="text" class="form-control obs-field" value="' + $('#p-desc').val() + '" /></td>');
         row.append(td_obs);
 
-        var td_edit = $('<td><button type="button" class="btn btn-primary p-edit">Editar</button> <button type="button" class="btn btn-danger p-delete">Deletar</button></td>');
+        var td_edit = $('<td><button type="button" class="btn btn-primary p-edit"><i class="fa fa-edit"></i>Editar</button> <button type="button" class="btn btn-danger p-delete"><i class="fa fa-trash-o"></i>Deletar</button></td>');
         row.append(td_edit);
 
         $('#p-body').append(row);
