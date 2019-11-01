@@ -166,6 +166,14 @@ $(window).on('load', function () {
         var order_id = $('#order_id').val();
         var product_id = row.find('.row-id').text();
 
+        if ($('#page-origin').val() === 'edit-page') {
+            if ($('#p-body').find('.row-id').length <= 1) {
+                $('#textModalMessage').html('O pedido não pode ter menos que um produto.');
+                $('#modalMessage').modal('toggle');
+                return false;
+            }
+        }
+
         deleteProductFromOrder(order_id, product_id, row);
     });
 
