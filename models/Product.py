@@ -20,6 +20,18 @@ class Product():
         except:
             return None
 
+    
+    def getByDesc(self, desc):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT * FROM produtos WHERE descricao LIKE %s', ('%'+desc+'%'))
+            result = c.fetchall()
+            c.close()
+            return result
+        except:
+            return None
+
 
     def get(self, id_produto):
         banco=DB()

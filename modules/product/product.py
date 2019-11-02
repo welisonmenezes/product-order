@@ -12,11 +12,17 @@ productBP = Blueprint('product', __name__, url_prefix='/product', template_folde
 @login_required
 def index():
     product = Product()
-    products = product.getAll()
+    desc = request.args.get('descricao', None)
+
+    if desc:
+        products = product.getByDesc(desc)
+    else:
+        products = product.getAll()
+
     images = []
     for product in products:
         images.append(b64encode(product[3]).decode("utf-8"))
-    return render_template('product.html', products=products, images=images), 200
+    return render_template('product.html', products=products, images=images, desc=desc), 200
 
 
 @productBP.route('/add', methods=['GET', 'POST'])
