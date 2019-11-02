@@ -52,6 +52,7 @@
                                         <th>ID</th>
                                         <th>Observação</th>
                                         <th>Cliente</th>
+                                        <th>Data</th>
                                         <th>Ver</th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,7 @@
                                                 <b class="table-label">Cliente:</b>
                                                 <a href="{{ url_for('client.edit', id=order[3]) }}">{{ order[4] }}</a>
                                             </td>
+                                            <td><b class="table-label">Data:</b> {{ order[1]|format_datetime('%d/%m/%Y') }}</td>
                                             <td>
                                                 <b class="table-label">Ver:</b>
                                                 <a href="{{ url_for('order.edit', id=order[0]) }}" class="btn-edit">
