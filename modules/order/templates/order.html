@@ -33,7 +33,7 @@
                                     <select class="form-control" name="user">
                                         <option value="">Usuário</option>
                                         {% for client in clients %}
-                                            <option value="{{ client[0] }}">{{ client[4] }}</option>
+                                            <option value="{{ client[0] }}" {{ 'selected' if user_id == client[0]|string else '' }}>{{ client[4] }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

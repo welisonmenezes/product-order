@@ -29,7 +29,7 @@ def index():
     else:
         orders = order.getByUser(session.get('user_id', ''))
 
-    return render_template('order.html', orders=orders, clients=clients), 200
+    return render_template('order.html', orders=orders, clients=clients, user_id=user_id), 200
 
 
 @orderBP.route('/report/<int:id>')
