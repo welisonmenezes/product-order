@@ -31,6 +31,18 @@ class Client():
             return None
 
 
+    def getByName(self, nome):
+        banco=DB()
+        try:
+            c=banco.conexao.cursor()
+            c.execute('SELECT * FROM clientes WHERE nome LIKE %s', ('%'+nome+'%'))
+            result = c.fetchall()
+            c.close()
+            return result
+        except:
+            return None
+
+
     def get(self, id_cliente):
         banco=DB()
         try:

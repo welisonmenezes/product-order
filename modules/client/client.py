@@ -14,8 +14,14 @@ clientBP = Blueprint('client', __name__, url_prefix='/client', template_folder='
 @must_be_admin
 def index():
     client = Client()
-    clients = client.getAll()
-    return render_template('client.html', clients=clients), 200
+    nome = request.args.get('nome', '')
+
+    if nome:
+        clients = client.getByName(nome)
+    else:
+        clients = client.getAll()
+
+    return render_template('client.html', clients=clients, nome=nome), 200
 
 
 @clientBP.route('/add', methods=['GET', 'POST'])

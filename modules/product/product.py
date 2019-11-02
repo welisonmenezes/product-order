@@ -12,7 +12,7 @@ productBP = Blueprint('product', __name__, url_prefix='/product', template_folde
 @login_required
 def index():
     product = Product()
-    desc = request.args.get('descricao', None)
+    desc = request.args.get('descricao', '')
 
     if desc:
         products = product.getByDesc(desc)
