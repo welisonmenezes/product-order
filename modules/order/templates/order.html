@@ -26,10 +26,10 @@
                         <hr />
 
                         {% if session.get('user_grupo', '') != 'user' %}
-                        <form>
+                        <form class="form-filter">
                             <div class="row">
-                                <div class="col-md-1 col-sm-2 col-3">Filtro:</div>
-                                <div class="col-md-3 col-sm-6 col-6">
+                                <div class="col-md-1 col-sm-2 col-12">Filtro:</div>
+                                <div class="col-md-3 col-sm-6 col-8">
                                     <select class="form-control" name="user">
                                         <option value="">Usuário</option>
                                         {% for client in clients %}
@@ -37,7 +37,7 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-md-1 col-sm-2 col-3">
+                                <div class="col-md-1 col-sm-2 col-4">
                                     <button type="submit" class="btn btn-primary">Filtrar</button>
                                 </div>
                             </div>

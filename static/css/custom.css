@@ -137,4 +137,18 @@
     .btn-group .btn{
         margin-bottom: 10px;
     }
+
+
+    .form-filter .row{
+        margin-right: -5px;
+        margin-left: -5px;
+    }
+    .form-filter .row > div{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    .row.actions .btn{
+        margin-bottom: 10px;
+    }
 }
