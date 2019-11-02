@@ -63,7 +63,11 @@
                                             <td><b class="table-label">Observação:</b> {{ order[2] }}</td>
                                             <td>
                                                 <b class="table-label">Cliente:</b>
+                                                {% if session.get('user_grupo', '') != 'admin' %}
+                                                {{ order[4] }}
+                                                {% else %}
                                                 <a href="{{ url_for('client.edit', id=order[3]) }}">{{ order[4] }}</a>
+                                                {% endif %}
                                             </td>
                                             <td><b class="table-label">Data:</b> {{ order[1]|format_datetime('%d/%m/%Y') }}</td>
                                             <td>
