@@ -12,7 +12,7 @@ MYSQL_PASSWORD = ''
 MYSQL_DB = 'testes'
 
 # Configurações de segurança
-SECRET_KEY = '#$#gdFDKF#993FDVKkfdkj#$$2@@@@dfdlafFGÇPLO^dfe__fd'
+SECRET_KEY = '#$#gdFDKF#993FDVKkfdkj#$$2@@@@xxdfdlafFGÇPLO^dfe__fd'
 PERMANENT_SESSION_LIFETIME = timedelta(minutes=20)
 USE_PERMANENT_SESSION = True
 
